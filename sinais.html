@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PinkZone • Sinais de Alerta</title>
+
+<link rel="stylesheet" href="testepz.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<button class="dark-mode-toggle">🌙</button>
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<span class="logo-icon">🌸</span>
+
+<div class="logo-text">
+
+<h2>PinkZone</h2>
+
+<small>Rosa é sua zona segura</small>
+
+</div>
+
+</div>
+
+<ul>
+
+<li><a href="testepz.html">Início</a></li>
+
+<li><a href="sobre.html">Sobre</a></li>
+
+<li><a href="apoio.html">Rede de Apoio</a></li>
+
+<li><a href="sinais.html" class="active">Sinais</a></li>
+
+<li>
+
+<button class="menu-alerta" id="abrirAjuda">
+
+    🚨 Denunciar
+
+</button>
+
+</li>
+</ul>
+
+</nav>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<div class="hero-text">
+
+<span class="hero-badge">
+
+🚩 Identifique comportamentos abusivos
+
+</span>
+
+<h1>
+
+Os sinais podem começar <span>pequenos.</span>
+
+</h1>
+
+<p>
+
+Nem toda violência deixa marcas físicas. Muitas situações começam com controle, manipulação ou isolamento e evoluem com o tempo. Conhecer esses sinais é um passo importante para buscar ajuda.
+
+</p>
+
+</div>
+
+<div class="hero-image">
+
+<img src="imagens/sinais.svg" alt="Sinais de alerta">
+
+</div>
+
+</section>
+<section>
+
+<h2 class="titulo-secao">
+
+🚩 Você reconhece algum destes comportamentos?
+
+</h2>
+
+<div class="grid-layout">
+
+<div class="card alerta">
+
+<div class="icone">
+
+📱
+
+</div>
+
+<h3>
+
+Controla seu celular
+
+</h3>
+
+<p>
+
+Exige senhas, lê mensagens sem permissão ou controla com quem você conversa.
+
+</p>
+
+</div>
+
+<div class="card alerta">
+
+<div class="icone">
+
+👗
+
+</div>
+
+<h3>
+
+Controla suas roupas
+
+</h3>
+
+<p>
+
+Decide o que você pode vestir ou critica constantemente sua aparência.
+
+</p>
+
+</div>
+
+<div class="card alerta">
+
+<div class="icone">
+
+🚫
+
+</div>
+
+<h3>
+
+Afasta você da família
+
+</h3>
+
+<p>
+
+Impede encontros, cria brigas ou tenta isolar você das pessoas próximas.
+
+</p>
+
+</div>
+
+<div class="card alerta">
+
+<div class="icone">
+
+💰
+
+</div>
+
+<h3>
+
+Controla seu dinheiro
+
+</h3>
+
+<p>
+
+Impede que você trabalhe ou administra todo o dinheiro sem sua participação.
+
+</p>
+
+</div>
+
+<div class="card alerta">
+
+<div class="icone">
+
+😠
+
+</div>
+
+<h3>
+
+Humilha constantemente
+
+</h3>
+
+<p>
+
+Ofensas, apelidos pejorativos e críticas frequentes também são formas de violência.
+
+</p>
+
+</div>
+
+<div class="card alerta">
+
+<div class="icone">
+
+⚠️
+
+</div>
+
+<h3>
+
+Faz ameaças
+
+</h3>
+
+<p>
+
+Ameaças contra você, seus filhos, familiares ou animais de estimação.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- QUIZ -->
+
+<section class="quiz-alerta">
+
+    <h2 class="titulo-secao">
+
+        📝 Faça uma reflexão
+
+    </h2>
+
+    <p class="quiz-texto">
+
+        Marque as situações que acontecem com frequência.
+        Este questionário é apenas informativo e não substitui
+        atendimento profissional.
+
+    </p>
+
+    <div class="quiz-box">
+
+        <label>
+
+            <input type="checkbox" class="pergunta">
+
+            Meu parceiro controla meu celular.
+
+        </label>
+
+        <label>
+
+            <input type="checkbox" class="pergunta">
+
+            Tenho medo da reação dele quando discordo.
+
+        </label>
+
+        <label>
+
+            <input type="checkbox" class="pergunta">
+
+            Ele controla meu dinheiro.
+
+        </label>
+
+        <label>
+
+            <input type="checkbox" class="pergunta">
+
+            Já fui ameaçada.
+
+        </label>
+
+        <label>
+
+            <input type="checkbox" class="pergunta">
+
+            Me afastei da minha família por causa dele.
+
+        </label>
+
+        <label>
+
+            <input type="checkbox" class="pergunta">
+
+            Já sofri agressões físicas.
+
+        </label>
+
+        <button id="verificarQuiz" class="btn-primary">
+
+            Ver resultado
+
+        </button>
+
+        <div id="resultadoQuiz"></div>
+
+    </div>
+
+</section>
+
+<!-- COMO PEDIR AJUDA -->
+
+<section class="timeline-section">
+
+    <h2 class="titulo-secao">
+
+        💗 Como pedir ajuda
+
+    </h2>
+
+    <p class="timeline-subtitulo">
+
+        Não existe uma ordem obrigatória. Cada situação é diferente.
+        Estes são alguns passos que podem ajudar.
+
+    </p>
+
+    <div class="timeline">
+
+        <div class="timeline-item">
+
+            <div class="timeline-numero">
+
+                1
+
+            </div>
+
+            <div class="timeline-conteudo">
+
+                <h3>Reconheça os sinais</h3>
+
+                <p>
+
+                    Identificar que algo está errado é o primeiro passo para buscar proteção.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="timeline-item">
+
+            <div class="timeline-numero">
+
+                2
+
+            </div>
+
+            <div class="timeline-conteudo">
+
+                <h3>Procure um lugar seguro</h3>
+
+                <p>
+
+                    Caso exista risco imediato, vá para um local onde você se sinta protegida.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="timeline-item">
+
+            <div class="timeline-numero">
+
+                3
+
+            </div>
+
+            <div class="timeline-conteudo">
+
+                <h3>Converse com alguém de confiança</h3>
+
+                <p>
+
+                    Amigos, familiares ou profissionais podem oferecer apoio e ajudar a encontrar serviços especializados.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="timeline-item">
+
+            <div class="timeline-numero">
+
+                4
+
+            </div>
+
+            <div class="timeline-conteudo">
+
+                <h3>Busque atendimento</h3>
+
+                <p>
+
+                    Utilize a Rede de Apoio do PinkZone para localizar serviços próximos e conhecer seus direitos.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- COMPARAÇÃO -->
+
+<section class="comparacao">
+
+    <h2 class="titulo-secao">
+
+        ❤️ Relação saudável × 🚩 Relação abusiva
+
+    </h2>
+
+    <p class="comparacao-texto">
+
+        Todo relacionamento deve ser baseado no respeito, na confiança e na liberdade.
+        Compare alguns exemplos abaixo.
+
+    </p>
+
+    <div class="comparacao-grid">
+
+        <div class="comparacao-card saudavel">
+
+            <h3>❤️ Relação saudável</h3>
+
+            <ul>
+
+                <li>🤝 Respeita suas opiniões.</li>
+
+                <li>💬 Conversa sem ameaças.</li>
+
+                <li>😊 Confia em você.</li>
+
+                <li>🌸 Incentiva seus sonhos.</li>
+
+                <li>👨‍👩‍👧 Respeita sua família.</li>
+
+                <li>📱 Não invade sua privacidade.</li>
+
+                <li>💰 Respeita sua independência financeira.</li>
+
+                <li>❤️ Faz você se sentir segura.</li>
+
+            </ul>
+
+        </div>
+
+        <div class="comparacao-card abusiva">
+
+            <h3>🚩 Relação abusiva</h3>
+
+            <ul>
+
+                <li>🚫 Controla suas amizades.</li>
+
+                <li>📱 Exige suas senhas.</li>
+
+                <li>😡 Humilha você.</li>
+
+                <li>💰 Controla seu dinheiro.</li>
+
+                <li>⚠️ Faz ameaças.</li>
+
+                <li>🚷 Afasta você da família.</li>
+
+                <li>👀 Vigia seus passos.</li>
+
+                <li>👊 Usa violência física ou psicológica.</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- RODAPÉ -->
+
+<footer>
+
+
+<div class="footer-container">
+
+
+<div class="footer-logo">
+
+
+<h2>
+
+PinkZone 🌸
+
+</h2>
+
+
+
+<p>
+
+Uma plataforma de informação, acolhimento e orientação
+para mulheres em situação de violência.
+
+</p>
+
+
+</div>
+
+
+
+
+<div class="footer-links">
+
+
+<h3>
+
+Navegação
+
+</h3>
+
+
+<a href="testepz.html">
+
+Início
+
+</a>
+
+
+<a href="sobre.html">
+
+Sobre
+
+</a>
+
+
+<a href="apoio.html">
+
+Rede de Apoio
+
+</a>
+
+
+<a href="denunciar.html">
+
+Denunciar
+
+</a>
+
+
+</div>
+
+
+
+
+
+<div class="footer-links">
+
+
+<h3>
+
+Ajuda
+
+</h3>
+
+
+<a href="tel:180">
+
+📞 Central 180
+
+</a>
+
+
+<a href="tel:190">
+
+🚔 Emergência 190
+
+</a>
+
+
+<a href="#">
+
+🔒 Privacidade
+
+</a>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<p class="footer-copy">
+
+© 2026 PinkZone - Rosa é sua zona segura.
+
+</p>
+
+
+
+</footer>
+<!-- POPUP AJUDA -->
+
+<div class="modal-ajuda" id="modalAjuda">
+
+    <div class="modal-conteudo">
+
+        <span class="fechar-modal" id="fecharAjuda">
+
+            ✖
+
+        </span>
+
+        <div class="modal-topo">
+
+            <div class="modal-icone">
+
+                🚨
+
+            </div>
+
+            <h2>
+
+                Buscar ajuda
+
+            </h2>
+
+            <p>
+
+                Escolha como deseja entrar em contato.
+
+            </p>
+
+        </div>
+
+        <div class="modal-opcoes">
+
+            <a href="https://wa.me/556196100180/?text=Ol%C3%A1"
+               target="_blank"
+               class="opcao-ajuda whatsapp">
+
+                🟢
+
+                <div>
+
+                    <strong>WhatsApp - Central de Atendimento às Mulheres</strong>
+
+                    <small>Conversar agora</small>
+
+                </div>
+
+            </a>
+
+            <a href="tel:180"
+
+               class="opcao-ajuda telefone">
+
+                📞
+
+                <div>
+
+                    <strong>Ligar 180</strong>
+
+                    <small>Central da Mulher</small>
+
+                </div>
+
+            </a>
+
+            <a href="tel:190"
+
+               class="opcao-ajuda policia">
+
+                🚔
+
+                <div>
+
+                    <strong>Emergência 190</strong>
+
+                    <small>Polícia Militar</small>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="scriptpzteste.js"></script>
+
+</body>
+
+</html>
