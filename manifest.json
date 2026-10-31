@@ -1,0 +1,78 @@
+{
+  "id": "./",
+  "name": "PinkZone - Rosa é sua zona segura",
+  "short_name": "PinkZone",
+  "description": "Plataforma de informação, acolhimento e orientação para mulheres em situação de violência.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "./testepz.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#fff7fa",
+  "theme_color": "#ff4f87",
+  "categories": ["health", "education", "lifestyle"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Rede de Apoio",
+      "short_name": "Apoio",
+      "description": "Serviços e locais de apoio",
+      "url": "./apoio.html",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Sinais de Alerta",
+      "short_name": "Sinais",
+      "description": "Identifique comportamentos abusivos",
+      "url": "./sinais.html",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Como Denunciar",
+      "short_name": "Denunciar",
+      "description": "Canais e passos para denunciar com segurança",
+      "url": "./denunciar.html",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

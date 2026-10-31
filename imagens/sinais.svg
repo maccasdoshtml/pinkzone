@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520" role="img" aria-labelledby="tituloSinais">
+  <title id="tituloSinais">Sinais de alerta e proteção</title>
+  <defs>
+    <linearGradient id="fundoSinais" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe4ec"/>
+      <stop offset="1" stop-color="#fff7fa"/>
+    </linearGradient>
+    <linearGradient id="rosaSinais" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff4f87"/>
+      <stop offset="1" stop-color="#ff79a8"/>
+    </linearGradient>
+    <linearGradient id="escuroSinais" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c2185b"/>
+      <stop offset="1" stop-color="#ff4f87"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="640" height="520" rx="48" fill="url(#fundoSinais)"/>
+  <circle cx="112" cy="112" r="62" fill="#ffd0de" opacity=".7"/>
+  <circle cx="536" cy="420" r="76" fill="#ffd0de" opacity=".5"/>
+  <path d="M92 330c42-34 92-32 132 6" fill="none" stroke="#ffb3ca" stroke-width="10" stroke-linecap="round" opacity=".8"/>
+  <path d="M416 106c38-18 76-8 102 20" fill="none" stroke="#ffb3ca" stroke-width="10" stroke-linecap="round" opacity=".8"/>
+
+  <g>
+    <path d="M320 74l156 58v116c0 96-64 160-156 198-92-38-156-102-156-198V132z" fill="url(#rosaSinais)"/>
+    <path d="M320 100l126 47v99c0 78-52 132-126 166-74-34-126-88-126-166v-99z" fill="#fff" opacity=".92"/>
+    <path d="M320 178c-18-24-58-16-58 16 0 24 32 42 58 64 26-22 58-40 58-64 0-32-40-40-58-16z" fill="url(#escuroSinais)"/>
+    <path d="M286 304h68" stroke="#c2185b" stroke-width="14" stroke-linecap="round"/>
+    <path d="M320 304v44" stroke="#c2185b" stroke-width="14" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <circle cx="500" cy="150" r="44" fill="#fff"/>
+    <path d="M500 122l32 56h-64z" fill="#ffb020"/>
+    <path d="M500 142v20" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="500" cy="172" r="4" fill="#fff"/>
+  </g>
+
+  <g>
+    <circle cx="138" cy="204" r="34" fill="#fff"/>
+    <path d="M138 186c-8-10-24-6-24 7 0 10 13 17 24 26 11-9 24-16 24-26 0-13-16-17-24-7z" fill="url(#rosaSinais)"/>
+  </g>
+
+  <g fill="#fff">
+    <circle cx="214" cy="432" r="6"/>
+    <circle cx="404" cy="448" r="7"/>
+    <circle cx="556" cy="276" r="5"/>
+    <circle cx="76" cy="398" r="4"/>
+  </g>
+</svg>

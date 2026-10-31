@@ -2943,3 +2943,853 @@ body.dark-theme .contatos-cancelar:hover{
     }
 
 }
+
+/* ===========================================
+   INTERFACE MOBILE
+=========================================== */
+
+.menu-mobile-toggle,
+.menu-mobile-item{
+
+    display:none;
+
+}
+
+.back-to-top{
+
+    position:fixed;
+    right:24px;
+    bottom:24px;
+    width:48px;
+    height:48px;
+    border:0;
+    border-radius:50%;
+    background:var(--gradiente);
+    color:white;
+    font-family:inherit;
+    font-size:1.25rem;
+    font-weight:700;
+    line-height:1;
+    cursor:pointer;
+    box-shadow:0 12px 30px rgba(255,79,135,.35);
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(12px);
+    transition:.25s;
+    z-index:9998;
+
+}
+
+.back-to-top.show{
+
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+
+}
+
+body.tem-saida-rapida .back-to-top{
+
+    bottom:95px;
+
+}
+
+@media(max-width:1150px){
+
+    html{
+
+        -webkit-text-size-adjust:100%;
+
+    }
+
+    body{
+
+        padding-bottom:env(safe-area-inset-bottom);
+
+    }
+
+    header{
+
+        padding:12px 12px 0;
+
+    }
+
+    nav{
+
+        width:100%;
+        max-width:none;
+        margin:10px auto;
+        padding:10px 14px;
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
+        gap:10px;
+        border-radius:16px;
+        top:10px;
+
+    }
+
+    nav .logo{
+
+        gap:10px;
+        min-width:0;
+
+    }
+
+    nav .logo-icon{
+
+        width:44px;
+        height:44px;
+        flex:0 0 44px;
+        font-size:22px;
+
+    }
+
+    .logo-text{
+
+        min-width:0;
+
+    }
+
+    .logo-text h2{
+
+        font-size:1.2rem;
+        line-height:1.2;
+
+    }
+
+    .logo-text small{
+
+        display:block;
+        font-size:.7rem;
+        line-height:1.3;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+
+    }
+
+    .menu-mobile-toggle{
+
+        display:flex;
+        flex:0 0 44px;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap:5px;
+        width:44px;
+        height:44px;
+        border:0;
+        border-radius:14px;
+        background:var(--rosa-claro);
+        cursor:pointer;
+        transition:.2s;
+
+    }
+
+    .menu-mobile-toggle span{
+
+        width:22px;
+        height:2.5px;
+        border-radius:2px;
+        background:var(--rosa-escuro);
+        transition:.25s;
+
+    }
+
+    nav.menu-aberto .menu-mobile-toggle span:nth-child(1){
+
+        transform:translateY(7.5px) rotate(45deg);
+
+    }
+
+    nav.menu-aberto .menu-mobile-toggle span:nth-child(2){
+
+        opacity:0;
+
+    }
+
+    nav.menu-aberto .menu-mobile-toggle span:nth-child(3){
+
+        transform:translateY(-7.5px) rotate(-45deg);
+
+    }
+
+    .dark-mode-toggle{
+
+        display:none;
+
+    }
+
+    html.menu-mobile-pronto nav ul{
+
+        display:none;
+        position:absolute;
+        top:calc(100% + 10px);
+        left:0;
+        right:0;
+        width:auto;
+        max-height:calc(100dvh - 120px);
+        overflow-y:auto;
+        flex-direction:column;
+        flex-wrap:nowrap;
+        align-items:stretch;
+        gap:6px;
+        padding:12px;
+        background:white;
+        border-radius:18px;
+        box-shadow:0 20px 50px rgba(0,0,0,.16);
+        z-index:1000;
+        overscroll-behavior:contain;
+
+    }
+
+    html.menu-mobile-pronto nav.menu-aberto ul{
+
+        display:flex;
+        animation:menuDrop .2s ease;
+
+    }
+
+    @keyframes menuDrop{
+
+        from{
+            opacity:0;
+            transform:translateY(-6px);
+        }
+
+        to{
+            opacity:1;
+            transform:translateY(0);
+        }
+
+    }
+
+    nav ul li{
+
+        width:100%;
+
+    }
+
+    nav ul a{
+
+        width:100%;
+        justify-content:flex-start;
+        padding:12px 14px;
+        border-radius:12px;
+        white-space:normal;
+        text-align:left;
+
+    }
+
+    nav a::after{
+
+        display:none;
+
+    }
+
+    .nav-acoes{
+
+        width:100%;
+        flex-direction:row;
+        flex-wrap:wrap;
+        gap:8px;
+
+    }
+
+    .nav-acoes .menu-contatos,
+    .nav-acoes .menu-alerta{
+
+        flex:1 1 120px;
+        max-width:none;
+        min-width:0;
+        font-size:.92rem;
+        padding:12px 10px;
+        justify-content:center;
+
+    }
+
+    .menu-mobile-item{
+
+        display:block;
+        width:100%;
+
+    }
+
+    .menu-mobile-item[hidden]{
+
+        display:none !important;
+
+    }
+
+    .tema-mobile,
+    .instalar-app{
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:8px;
+        width:100%;
+        padding:12px 14px;
+        border:1.5px solid #f0d3df;
+        border-radius:12px;
+        background:var(--rosa-claro);
+        color:var(--rosa-escuro);
+        font-family:inherit;
+        font-size:.9rem;
+        font-weight:700;
+        cursor:pointer;
+        transition:.2s;
+
+    }
+
+    .tema-mobile:hover{
+
+        background:var(--rosa);
+        color:white;
+
+    }
+
+    .tema-icone{
+
+        font-size:1.1rem;
+        line-height:1;
+
+    }
+
+    .instalar-app{
+
+        background:var(--gradiente);
+        border:0;
+        color:white;
+
+    }
+
+    .instalar-app:hover{
+
+        filter:brightness(.96);
+
+    }
+
+    body.dark-theme nav ul{
+
+        background:#1d1d1d;
+        border:1px solid #3a2b33;
+
+    }
+
+    body.dark-theme nav ul a:hover{
+
+        background:#33242b;
+
+    }
+
+    body.dark-theme .tema-mobile{
+
+        background:#33242b;
+        color:#ff9dbd;
+        border-color:#3a2b33;
+
+    }
+
+    body.dark-theme .tema-mobile:hover{
+
+        background:var(--rosa);
+        color:white;
+
+    }
+
+    main{
+
+        width:100%;
+        padding:32px 16px 44px;
+
+    }
+
+    main section{
+
+        margin-top:56px;
+
+    }
+
+    .hero{
+
+        min-height:auto;
+        grid-template-columns:1fr;
+        gap:28px;
+        padding-top:6px;
+        text-align:center;
+
+    }
+
+    .hero-text h1{
+
+        font-size:clamp(2rem,9vw,2.7rem);
+        margin:16px 0;
+
+    }
+
+    .hero-text p{
+
+        font-size:1rem;
+        line-height:1.7;
+        margin-bottom:26px;
+
+    }
+
+    .hero-badge{
+
+        max-width:100%;
+        justify-content:center;
+        padding:8px 14px;
+        font-size:.82rem;
+        line-height:1.4;
+        text-align:center;
+
+    }
+
+    .hero-buttons{
+
+        gap:12px;
+        margin-top:8px;
+
+    }
+
+    .btn-primary,
+    .btn-secondary{
+
+        padding:15px 22px;
+
+    }
+
+    .hero-image img{
+
+        max-width:300px;
+        margin:0 auto;
+
+    }
+
+    .stats{
+
+        grid-template-columns:1fr;
+        gap:14px;
+        margin:48px 0;
+
+    }
+
+    .stat{
+
+        padding:22px;
+        border-radius:18px;
+
+    }
+
+    .stat h2{
+
+        font-size:2.1rem;
+
+    }
+
+    .about-home{
+
+        margin:56px 0;
+        gap:24px;
+
+    }
+
+    .about-home::after{
+
+        height:190px;
+        font-size:90px;
+        border-radius:24px;
+
+    }
+
+    .about-text h2{
+
+        font-size:1.8rem;
+        margin-bottom:16px;
+
+    }
+
+    .about-text p{
+
+        font-size:.98rem;
+        line-height:1.7;
+        margin-bottom:14px;
+
+    }
+
+    .titulo-secao{
+
+        font-size:1.75rem;
+        line-height:1.3;
+        margin-bottom:28px;
+
+    }
+
+    .grid-layout{
+
+        grid-template-columns:1fr;
+        gap:16px;
+
+    }
+
+    .card{
+
+        padding:22px;
+        border-radius:18px;
+
+    }
+
+    .icone{
+
+        width:62px;
+        height:62px;
+        font-size:1.6rem;
+        margin-bottom:18px;
+
+    }
+
+    .card h3{
+
+        font-size:1.15rem;
+        line-height:1.35;
+        margin-bottom:10px;
+
+    }
+
+    .card p{
+
+        font-size:.95rem;
+        line-height:1.7;
+
+    }
+
+    .cta{
+
+        margin:56px 0;
+        padding:34px 20px;
+        border-radius:24px;
+
+    }
+
+    .cta h2{
+
+        font-size:1.8rem;
+        line-height:1.3;
+
+    }
+
+    .cta p{
+
+        font-size:1rem;
+        line-height:1.6;
+        margin-bottom:26px;
+
+    }
+
+    .pesquisa-apoio{
+
+        margin-bottom:36px;
+
+    }
+
+    #pesquisaApoio{
+
+        padding:14px 18px;
+        font-size:.95rem;
+
+    }
+
+    .quiz-alerta,
+    .timeline-section,
+    .comparacao{
+
+        margin:56px 0;
+
+    }
+
+    .quiz-texto,
+    .timeline-subtitulo,
+    .comparacao-texto{
+
+        font-size:.95rem;
+        margin-bottom:28px;
+
+    }
+
+    .quiz-box{
+
+        padding:18px;
+        border-radius:18px;
+
+    }
+
+    .quiz-box label{
+
+        padding:12px;
+        gap:12px;
+        margin-bottom:10px;
+        font-size:.95rem;
+        line-height:1.5;
+
+    }
+
+    #resultadoQuiz{
+
+        padding:18px;
+        font-size:.95rem;
+
+    }
+
+    .timeline{
+
+        margin:36px auto;
+
+    }
+
+    .timeline::before{
+
+        left:23px;
+
+    }
+
+    .timeline-item{
+
+        gap:14px;
+        margin-bottom:26px;
+
+    }
+
+    .timeline-numero{
+
+        width:48px;
+        height:48px;
+        font-size:1.05rem;
+
+    }
+
+    .timeline-conteudo{
+
+        padding:18px;
+        border-radius:16px;
+
+    }
+
+    .timeline-conteudo h3{
+
+        font-size:1.05rem;
+
+    }
+
+    .timeline-conteudo p{
+
+        font-size:.93rem;
+        line-height:1.6;
+
+    }
+
+    .comparacao-grid{
+
+        grid-template-columns:1fr;
+        gap:18px;
+
+    }
+
+    .comparacao-card{
+
+        padding:22px;
+        border-radius:18px;
+
+    }
+
+    .comparacao-card h3{
+
+        font-size:1.25rem;
+        margin-bottom:16px;
+
+    }
+
+    .comparacao-card li{
+
+        font-size:.95rem;
+        line-height:1.6;
+        margin-bottom:10px;
+
+    }
+
+    .modal-ajuda{
+
+        padding:12px;
+
+    }
+
+    .modal-conteudo{
+
+        width:100%;
+        max-width:420px;
+        max-height:calc(100dvh - 24px);
+        overflow-y:auto;
+        padding:24px 20px;
+        border-radius:20px;
+
+    }
+
+    .modal-topo{
+
+        margin-bottom:20px;
+
+    }
+
+    .modal-icone{
+
+        font-size:38px;
+
+    }
+
+    .opcao-ajuda{
+
+        padding:14px;
+        gap:12px;
+
+    }
+
+    .opcao-ajuda strong{
+
+        font-size:.92rem;
+
+    }
+
+    .opcao-ajuda small{
+
+        font-size:.8rem;
+
+    }
+
+    footer{
+
+        margin-top:56px;
+        padding:40px 20px calc(40px + env(safe-area-inset-bottom));
+
+    }
+
+    .footer-container{
+
+        gap:28px;
+
+    }
+
+    .footer-copy{
+
+        margin-top:28px;
+        font-size:.85rem;
+
+    }
+
+    .footer-links a{
+
+        margin-bottom:8px;
+
+    }
+
+    .quick-exit{
+
+        left:0;
+        right:0;
+        bottom:0;
+        width:auto;
+        padding:16px 20px calc(16px + env(safe-area-inset-bottom));
+        border-radius:18px 18px 0 0;
+        text-align:center;
+        z-index:9997;
+
+    }
+
+    body.tem-saida-rapida footer{
+
+        padding-bottom:calc(110px + env(safe-area-inset-bottom));
+
+    }
+
+    .back-to-top{
+
+        right:14px;
+        bottom:14px;
+        width:44px;
+        height:44px;
+        font-size:1.1rem;
+
+    }
+
+    body.tem-saida-rapida .back-to-top{
+
+        bottom:calc(80px + env(safe-area-inset-bottom));
+
+    }
+
+}
+
+@media(max-width:500px){
+
+    .logo-text small{
+
+        display:none;
+
+    }
+
+    .logo-text h2{
+
+        font-size:1.1rem;
+
+    }
+
+    .nav-acoes .menu-contatos,
+    .nav-acoes .menu-alerta{
+
+        flex:1 1 100%;
+
+    }
+
+    .hero{
+
+        gap:20px;
+
+    }
+
+    .hero-text h1{
+
+        font-size:1.9rem;
+
+    }
+
+    .hero-text p{
+
+        font-size:.95rem;
+        margin-bottom:22px;
+
+    }
+
+    .hero-image img{
+
+        max-width:220px;
+
+    }
+
+}
+
+@media(max-width:380px){
+
+    .hero-image img{
+
+        max-width:200px;
+
+    }
+
+    .hero-text h1{
+
+        font-size:1.8rem;
+
+    }
+
+}

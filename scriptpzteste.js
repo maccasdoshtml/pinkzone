@@ -1,17 +1,43 @@
 /*====================================================
     PINKZONE 2.0
     Desenvolvido em JavaScript puro
-=====================================================*/
+====================================================*/
+
+let promptInstalacaoPWA = null;
+
+window.addEventListener("beforeinstallprompt", (evento) => {
+
+    evento.preventDefault();
+    promptInstalacaoPWA = evento;
+
+    const item = document.getElementById("instalarApp");
+
+    if (item) item.parentElement.hidden = false;
+
+});
+
+window.addEventListener("appinstalled", () => {
+
+    promptInstalacaoPWA = null;
+
+    const item = document.getElementById("instalarApp");
+
+    if (item) item.parentElement.hidden = true;
+
+});
 
 document.addEventListener("DOMContentLoaded",()=>{
 
     iniciarContadores();
     iniciarAnimacoesScroll();
     iniciarScrollSuave();
+    iniciarMenuMobile();
     iniciarModoEscuro();
     criarBotaoTopo();
     iniciarCards();
     iniciarMenu();
+    iniciarSaidaRapida();
+    registrarServiceWorker();
 
 });
 
@@ -155,28 +181,53 @@ function iniciarAnimacoesScroll() {
 
 function iniciarModoEscuro() {
 
-    const botao = document.querySelector(".dark-mode-toggle");
+    const botoes = document.querySelectorAll(".dark-mode-toggle, .tema-mobile");
 
-    if (!botao) return;
+    if (!botoes.length) return;
 
-    if (localStorage.getItem("tema") === "escuro") {
+    aplicarTema(localStorage.getItem("tema") === "escuro");
 
-        document.body.classList.add("dark-theme");
-        botao.innerHTML = "☀️";
+    document.addEventListener("click", (evento) => {
 
-    }
+        if (!(evento.target instanceof Element)) return;
 
-    botao.addEventListener("click", () => {
+        const botao = evento.target.closest(".dark-mode-toggle, .tema-mobile");
 
-        document.body.classList.toggle("dark-theme");
+        if (!botao) return;
 
-        const ativo = document.body.classList.contains("dark-theme");
-
-        localStorage.setItem("tema", ativo ? "escuro" : "claro");
-
-        botao.innerHTML = ativo ? "☀️" : "🌙";
+        aplicarTema(!document.body.classList.contains("dark-theme"));
 
     });
+
+}
+
+function aplicarTema(escuro) {
+
+    document.body.classList.toggle("dark-theme", escuro);
+
+    localStorage.setItem("tema", escuro ? "escuro" : "claro");
+
+    document.querySelectorAll(".dark-mode-toggle").forEach(botao => {
+
+        botao.innerHTML = escuro ? "☀️" : "🌙";
+        botao.setAttribute("aria-label", escuro ? "Ativar tema claro" : "Ativar tema escuro");
+        botao.setAttribute("title", escuro ? "Tema claro" : "Tema escuro");
+
+    });
+
+    document.querySelectorAll(".tema-mobile").forEach(botao => {
+
+        botao.innerHTML = `
+            <span class="tema-icone">${escuro ? "☀️" : "🌙"}</span>
+            <span>${escuro ? "Tema claro" : "Tema escuro"}</span>
+        `;
+        botao.setAttribute("aria-label", escuro ? "Ativar tema claro" : "Ativar tema escuro");
+
+    });
+
+    const metaTema = document.querySelector('meta[name="theme-color"]');
+
+    if (metaTema) metaTema.setAttribute("content", escuro ? "#121212" : "#ff4f87");
 
 }
 
@@ -188,9 +239,11 @@ function criarBotaoTopo(){
 
     const botao=document.createElement("button");
 
+    botao.type="button";
     botao.className="back-to-top";
-
     botao.innerHTML="↑";
+    botao.setAttribute("aria-label","Voltar ao topo");
+    botao.setAttribute("title","Voltar ao topo");
 
     document.body.appendChild(botao);
 
@@ -337,6 +390,175 @@ function iniciarMenu(){
             }
 
         });
+
+    });
+
+}
+
+/*====================================================
+    MENU MOBILE
+====================================================*/
+
+function iniciarMenuMobile() {
+
+    const nav = document.querySelector("nav");
+    const lista = nav ? nav.querySelector("ul") : null;
+
+    if (!nav || !lista) return;
+
+    if (!lista.id) lista.id = "menuPrincipal";
+
+    const botao = document.createElement("button");
+
+    botao.type = "button";
+    botao.className = "menu-mobile-toggle";
+    botao.id = "menuMobileToggle";
+    botao.setAttribute("aria-label", "Abrir menu");
+    botao.setAttribute("aria-expanded", "false");
+    botao.setAttribute("aria-controls", lista.id);
+    botao.innerHTML = "<span></span><span></span><span></span>";
+
+    nav.insertBefore(botao, lista);
+
+    const itemTema = document.createElement("li");
+
+    itemTema.className = "menu-mobile-item";
+
+    const botaoTema = document.createElement("button");
+
+    botaoTema.type = "button";
+    botaoTema.className = "tema-mobile";
+    botaoTema.setAttribute("aria-label", "Ativar tema escuro");
+    botaoTema.textContent = "🌙";
+
+    itemTema.appendChild(botaoTema);
+    lista.appendChild(itemTema);
+
+    const itemInstalar = document.createElement("li");
+
+    itemInstalar.className = "menu-mobile-item";
+    itemInstalar.hidden = !promptInstalacaoPWA;
+
+    const botaoInstalar = document.createElement("button");
+
+    botaoInstalar.type = "button";
+    botaoInstalar.className = "instalar-app";
+    botaoInstalar.id = "instalarApp";
+    botaoInstalar.textContent = "Instalar aplicativo";
+
+    itemInstalar.appendChild(botaoInstalar);
+    lista.appendChild(itemInstalar);
+
+    function abrirMenu() {
+
+        nav.classList.add("menu-aberto");
+        botao.setAttribute("aria-expanded", "true");
+        botao.setAttribute("aria-label", "Fechar menu");
+
+    }
+
+    function fecharMenu() {
+
+        nav.classList.remove("menu-aberto");
+        botao.setAttribute("aria-expanded", "false");
+        botao.setAttribute("aria-label", "Abrir menu");
+
+    }
+
+    botao.addEventListener("click", (evento) => {
+
+        evento.stopPropagation();
+
+        if (nav.classList.contains("menu-aberto")) {
+
+            fecharMenu();
+
+        } else {
+
+            abrirMenu();
+
+        }
+
+    });
+
+    lista.addEventListener("click", (evento) => {
+
+        if (!(evento.target instanceof Element)) return;
+
+        if (
+            evento.target.closest("a") ||
+            evento.target.closest("#abrirContatos") ||
+            evento.target.closest("#abrirAjuda")
+        ) {
+
+            fecharMenu();
+
+        }
+
+    });
+
+    document.addEventListener("click", (evento) => {
+
+        if (!nav.contains(evento.target)) fecharMenu();
+
+    });
+
+    document.addEventListener("keydown", (evento) => {
+
+        if (evento.key === "Escape") fecharMenu();
+
+    });
+
+    window.addEventListener("resize", () => {
+
+        if (window.innerWidth > 1150) fecharMenu();
+
+    });
+
+    botaoInstalar.addEventListener("click", async () => {
+
+        if (!promptInstalacaoPWA) return;
+
+        promptInstalacaoPWA.prompt();
+        await promptInstalacaoPWA.userChoice;
+        promptInstalacaoPWA = null;
+        itemInstalar.hidden = true;
+
+    });
+
+    document.documentElement.classList.add("menu-mobile-pronto");
+
+}
+
+/*====================================================
+    SAÍDA RÁPIDA
+====================================================*/
+
+function iniciarSaidaRapida() {
+
+    if (document.querySelector(".quick-exit")) {
+
+        document.body.classList.add("tem-saida-rapida");
+
+    }
+
+}
+
+/*====================================================
+    SERVICE WORKER (PWA)
+====================================================*/
+
+function registrarServiceWorker() {
+
+    if (!("serviceWorker" in navigator)) return;
+
+    const local = ["localhost", "127.0.0.1"].includes(location.hostname);
+
+    if (location.protocol !== "https:" && !local) return;
+
+    window.addEventListener("load", () => {
+
+        navigator.serviceWorker.register("service-worker.js").catch(() => {});
 
     });
 
@@ -978,6 +1200,18 @@ function iniciarContatos() {
     function posicionarPopover() {
 
         const margem = 12;
+
+        if (window.innerWidth <= 1150) {
+
+            popover.style.width = `${window.innerWidth - margem * 2}px`;
+            popover.style.left = `${margem}px`;
+            popover.style.top = `${margem}px`;
+            popover.style.maxHeight = `${window.innerHeight - margem * 2}px`;
+
+            return;
+
+        }
+
         const rect = botaoContatos.getBoundingClientRect();
         const largura = Math.min(380, window.innerWidth - margem * 2);
 
