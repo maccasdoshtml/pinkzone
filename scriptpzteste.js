@@ -566,3 +566,602 @@ if (abrirAjuda && modalAjuda && fecharAjuda) {
 
 }
 
+/* ==========================================
+   CONTATOS DE CONFIANÇA
+========================================== */
+
+const CHAVE_CONTATOS = "pinkzone_contatos";
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    iniciarContatos();
+
+});
+
+function iniciarContatos() {
+
+    const botaoDenunciar = document.getElementById("abrirAjuda");
+
+    if (!botaoDenunciar) return;
+
+    const itemMenu = botaoDenunciar.closest("li");
+
+    if (!itemMenu) return;
+
+    const botaoContatos = document.createElement("button");
+
+    botaoContatos.type = "button";
+    botaoContatos.className = "menu-contatos";
+    botaoContatos.id = "abrirContatos";
+    botaoContatos.setAttribute("aria-haspopup", "dialog");
+    botaoContatos.setAttribute("aria-expanded", "false");
+    botaoContatos.textContent = "Contatos";
+
+    itemMenu.classList.add("nav-acoes");
+    itemMenu.insertBefore(botaoContatos, botaoDenunciar);
+
+    const popover = document.createElement("div");
+
+    popover.className = "contatos-popover";
+    popover.id = "contatosPopover";
+    popover.setAttribute("role", "dialog");
+    popover.setAttribute("aria-label", "Contatos de confiança");
+
+    popover.innerHTML = `
+        <div class="contatos-topo">
+            <div>
+                <h3>Contatos de confiança</h3>
+                <p>Salvos apenas neste navegador.</p>
+            </div>
+            <button type="button" class="contatos-fechar" id="fecharContatos" aria-label="Fechar contatos">&times;</button>
+        </div>
+
+        <div class="contatos-lista" id="contatosLista"></div>
+
+        <div class="contatos-vazio" id="contatosVazio">
+            Nenhum contato salvo ainda. Cadastre uma pessoa de confiança
+            para acessar o WhatsApp rapidamente.
+        </div>
+
+        <button type="button" class="contatos-adicionar" id="contatosAdicionar">
+            + Adicionar contato
+        </button>
+
+        <form class="contatos-form" id="contatosForm" novalidate>
+            <input type="hidden" id="contatoId">
+
+            <label for="contatoNome">Nome</label>
+            <input type="text" id="contatoNome" maxlength="60" autocomplete="name" placeholder="Ex.: Maria" required>
+
+            <label for="contatoParentesco">Grau de parentesco</label>
+            <select id="contatoParentesco" required>
+                <option value="">Selecione...</option>
+                <option>Mãe</option>
+                <option>Pai</option>
+                <option>Irmã</option>
+                <option>Irmão</option>
+                <option>Avó</option>
+                <option>Avô</option>
+                <option>Tia</option>
+                <option>Tio</option>
+                <option>Prima</option>
+                <option>Primo</option>
+                <option>Amiga</option>
+                <option>Amigo</option>
+                <option>Colega de trabalho</option>
+                <option>Colega de estudo</option>
+                <option>Vizinho(a)</option>
+                <option>Outro</option>
+            </select>
+
+            <label for="contatoTelefone">Telefone (DDD + número)</label>
+            <input type="tel" id="contatoTelefone" inputmode="numeric" maxlength="24" autocomplete="tel" placeholder="84998213691" required>
+
+            <small class="contatos-erro" id="contatosErro" role="alert"></small>
+
+            <div class="contatos-form-acoes">
+                <button type="submit" class="contatos-salvar" id="contatosSalvar">Salvar</button>
+                <button type="button" class="contatos-cancelar" id="contatosCancelar">Cancelar</button>
+            </div>
+        </form>
+
+        <p class="contatos-status" id="contatosStatus" role="status" aria-live="polite"></p>
+    `;
+
+    document.body.appendChild(popover);
+
+    const lista = popover.querySelector("#contatosLista");
+    const vazio = popover.querySelector("#contatosVazio");
+    const form = popover.querySelector("#contatosForm");
+    const campoId = popover.querySelector("#contatoId");
+    const campoNome = popover.querySelector("#contatoNome");
+    const campoParentesco = popover.querySelector("#contatoParentesco");
+    const campoTelefone = popover.querySelector("#contatoTelefone");
+    const erro = popover.querySelector("#contatosErro");
+    const status = popover.querySelector("#contatosStatus");
+    const botaoAdicionar = popover.querySelector("#contatosAdicionar");
+    const botaoSalvar = popover.querySelector("#contatosSalvar");
+    const botaoCancelar = popover.querySelector("#contatosCancelar");
+    const botaoFechar = popover.querySelector("#fecharContatos");
+
+    let contatos = carregarContatos();
+    let editandoId = null;
+    let aberto = false;
+    let statusTimer = null;
+
+    function carregarContatos() {
+
+        try {
+
+            const dados = JSON.parse(localStorage.getItem(CHAVE_CONTATOS) || "[]");
+
+            if (!Array.isArray(dados)) return [];
+
+            return dados
+                .filter(c => c && typeof c.nome === "string" && c.telefone)
+                .map(c => ({
+                    id: String(c.id || Date.now() + Math.random()),
+                    nome: String(c.nome).slice(0, 60),
+                    parentesco: String(c.parentesco || "Outro"),
+                    telefone: normalizarTelefone(c.telefone)
+                }))
+                .filter(c => telefoneValido(c.telefone));
+
+        } catch (e) {
+
+            return [];
+
+        }
+
+    }
+
+    function salvarNoNavegador() {
+
+        try {
+
+            localStorage.setItem(CHAVE_CONTATOS, JSON.stringify(contatos));
+
+            return true;
+
+        } catch (e) {
+
+            return false;
+
+        }
+
+    }
+
+    function normalizarTelefone(valor) {
+
+        let digitos = String(valor || "").replace(/\D/g, "");
+
+        if ((digitos.length === 12 || digitos.length === 13) && digitos.startsWith("55")) {
+
+            digitos = digitos.slice(2);
+
+        }
+
+        return digitos;
+
+    }
+
+    function telefoneValido(digitos) {
+
+        return digitos.length === 10 || digitos.length === 11;
+
+    }
+
+    function formatarTelefone(digitos) {
+
+        if (digitos.length === 11) {
+
+            return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 7)}-${digitos.slice(7)}`;
+
+        }
+
+        if (digitos.length === 10) {
+
+            return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 6)}-${digitos.slice(6)}`;
+
+        }
+
+        return digitos;
+
+    }
+
+    function linkWhatsApp(digitos) {
+
+        return `https://wa.me/55${digitos}`;
+
+    }
+
+    function mostrarStatus(mensagem, erroVisual = false) {
+
+        status.textContent = mensagem;
+        status.style.color = erroVisual ? "#c62828" : "#2e7d32";
+
+        clearTimeout(statusTimer);
+
+        statusTimer = setTimeout(() => {
+
+            status.textContent = "";
+
+        }, 3500);
+
+    }
+
+    function renderizar() {
+
+        lista.innerHTML = "";
+
+        if (!contatos.length) {
+
+            lista.style.display = "none";
+            vazio.style.display = "block";
+            botaoAdicionar.style.display = "none";
+
+            return;
+
+        }
+
+        lista.style.display = "flex";
+        vazio.style.display = "none";
+        botaoAdicionar.style.display = "block";
+
+        contatos.forEach(contato => {
+
+            const item = document.createElement("div");
+            item.className = "contato-item";
+            item.dataset.id = contato.id;
+
+            const botaoNome = document.createElement("button");
+            botaoNome.type = "button";
+            botaoNome.className = "contato-nome";
+            botaoNome.setAttribute("aria-expanded", "false");
+
+            const avatar = document.createElement("span");
+            avatar.className = "contato-avatar";
+            avatar.textContent = (contato.nome.trim().charAt(0) || "?").toUpperCase();
+
+            const info = document.createElement("span");
+            info.className = "contato-info";
+
+            const nome = document.createElement("strong");
+            nome.textContent = contato.nome;
+
+            const detalhe = document.createElement("small");
+            detalhe.textContent = `${contato.parentesco} • ${formatarTelefone(contato.telefone)}`;
+
+            info.appendChild(nome);
+            info.appendChild(detalhe);
+
+            const seta = document.createElement("span");
+            seta.className = "contato-seta";
+            seta.textContent = "›";
+
+            botaoNome.appendChild(avatar);
+            botaoNome.appendChild(info);
+            botaoNome.appendChild(seta);
+
+            const acoes = document.createElement("div");
+            acoes.className = "contato-acoes";
+
+            const link = document.createElement("a");
+            link.className = "contato-whatsapp";
+            link.href = linkWhatsApp(contato.telefone);
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.textContent = "Contato";
+
+            const editar = document.createElement("button");
+            editar.type = "button";
+            editar.className = "contato-editar";
+            editar.textContent = "Editar";
+
+            const excluir = document.createElement("button");
+            excluir.type = "button";
+            excluir.className = "contato-excluir";
+            excluir.textContent = "Excluir";
+
+            acoes.appendChild(link);
+            acoes.appendChild(editar);
+            acoes.appendChild(excluir);
+
+            item.appendChild(botaoNome);
+            item.appendChild(acoes);
+            lista.appendChild(item);
+
+            botaoNome.addEventListener("click", () => {
+
+                const estaAberto = item.classList.toggle("aberto");
+                botaoNome.setAttribute("aria-expanded", estaAberto ? "true" : "false");
+
+            });
+
+            editar.addEventListener("click", () => {
+
+                abrirFormulario(contato);
+
+            });
+
+            excluir.addEventListener("click", () => {
+
+                if (!confirm(`Excluir o contato "${contato.nome}"?`)) return;
+
+                contatos = contatos.filter(c => c.id !== contato.id);
+
+                if (!salvarNoNavegador()) {
+
+                    mostrarStatus("Não foi possível excluir neste navegador.", true);
+                    return;
+
+                }
+
+                if (editandoId === contato.id) fecharFormulario();
+
+                renderizar();
+                mostrarStatus("Contato excluído.");
+
+            });
+
+        });
+
+    }
+
+    function abrirFormulario(contato = null) {
+
+        editandoId = contato ? contato.id : null;
+        campoId.value = contato ? contato.id : "";
+        campoNome.value = contato ? contato.nome : "";
+        campoParentesco.value = contato ? contato.parentesco : "";
+        campoTelefone.value = contato ? contato.telefone : "";
+        erro.textContent = "";
+        botaoSalvar.textContent = contato ? "Salvar alterações" : "Salvar";
+
+        form.style.display = "flex";
+        lista.style.display = "none";
+        vazio.style.display = "none";
+        botaoAdicionar.style.display = "none";
+
+        campoNome.focus();
+
+    }
+
+    function fecharFormulario() {
+
+        editandoId = null;
+        form.reset();
+        campoId.value = "";
+        erro.textContent = "";
+        botaoSalvar.textContent = "Salvar";
+
+        form.style.display = "none";
+        renderizar();
+
+    }
+
+    function abrirPopover() {
+
+        aberto = true;
+        popover.classList.add("ativo");
+        botaoContatos.setAttribute("aria-expanded", "true");
+
+        posicionarPopover();
+        renderizar();
+
+        if (!contatos.length) {
+
+            abrirFormulario();
+
+        } else {
+
+            const primeiro = popover.querySelector(".contato-nome");
+
+            if (primeiro) primeiro.focus();
+
+        }
+
+    }
+
+    function fecharPopover(devolverFoco = false) {
+
+        aberto = false;
+        popover.classList.remove("ativo");
+        botaoContatos.setAttribute("aria-expanded", "false");
+
+        fecharFormulario();
+
+        if (devolverFoco) botaoContatos.focus();
+
+    }
+
+    function posicionarPopover() {
+
+        const margem = 12;
+        const rect = botaoContatos.getBoundingClientRect();
+        const largura = Math.min(380, window.innerWidth - margem * 2);
+
+        let esquerda = rect.right - largura;
+        esquerda = Math.max(margem, Math.min(esquerda, window.innerWidth - largura - margem));
+
+        const espacoAbaixo = window.innerHeight - rect.bottom - margem * 2;
+        const espacoAcima = rect.top - margem * 2;
+
+        let topo;
+        let alturaMaxima;
+
+        if (espacoAbaixo >= espacoAcima) {
+
+            topo = rect.bottom + margem;
+            alturaMaxima = espacoAbaixo;
+
+        } else {
+
+            alturaMaxima = espacoAcima;
+            topo = rect.top - margem - alturaMaxima;
+
+        }
+
+        if (alturaMaxima < 180) {
+
+            alturaMaxima = window.innerHeight - margem * 2;
+            topo = margem;
+
+        }
+
+        popover.style.width = `${largura}px`;
+        popover.style.left = `${esquerda}px`;
+        popover.style.top = `${topo}px`;
+        popover.style.maxHeight = `${Math.max(160, alturaMaxima)}px`;
+
+    }
+
+    botaoContatos.addEventListener("click", () => {
+
+        if (aberto) {
+
+            fecharPopover(true);
+
+        } else {
+
+            abrirPopover();
+
+        }
+
+    });
+
+    botaoFechar.addEventListener("click", () => fecharPopover(true));
+
+    botaoAdicionar.addEventListener("click", () => abrirFormulario());
+
+    botaoCancelar.addEventListener("click", () => {
+
+        if (contatos.length) {
+
+            fecharFormulario();
+
+        } else {
+
+            fecharPopover(true);
+
+        }
+
+    });
+
+    form.addEventListener("submit", (evento) => {
+
+        evento.preventDefault();
+        erro.textContent = "";
+
+        const nome = campoNome.value.trim();
+        const parentesco = campoParentesco.value;
+        const telefone = normalizarTelefone(campoTelefone.value);
+
+        if (nome.length < 2) {
+
+            erro.textContent = "Digite o nome do contato.";
+            campoNome.focus();
+            return;
+
+        }
+
+        if (!parentesco) {
+
+            erro.textContent = "Selecione o grau de parentesco.";
+            campoParentesco.focus();
+            return;
+
+        }
+
+        if (!telefoneValido(telefone)) {
+
+            erro.textContent = "Digite o telefone com DDD, só números. Ex.: 84998213691.";
+            campoTelefone.focus();
+            return;
+
+        }
+
+        if (editandoId) {
+
+            const contato = contatos.find(c => c.id === editandoId);
+
+            if (contato) {
+
+                contato.nome = nome;
+                contato.parentesco = parentesco;
+                contato.telefone = telefone;
+
+            }
+
+        } else {
+
+            contatos.push({
+                id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+                nome,
+                parentesco,
+                telefone
+            });
+
+        }
+
+        if (!salvarNoNavegador()) {
+
+            erro.textContent = "Não foi possível salvar. Verifique se o navegador permite armazenamento.";
+            return;
+
+        }
+
+        const mensagem = editandoId ? "Contato atualizado." : "Contato salvo.";
+
+        fecharFormulario();
+        mostrarStatus(mensagem);
+
+    });
+
+    campoTelefone.addEventListener("input", () => {
+
+        campoTelefone.value = normalizarTelefone(campoTelefone.value);
+
+    });
+
+    document.addEventListener("click", (evento) => {
+
+        if (!aberto) return;
+        if (popover.contains(evento.target) || botaoContatos.contains(evento.target)) return;
+
+        fecharPopover();
+
+    });
+
+    document.addEventListener("keydown", (evento) => {
+
+        if (evento.key === "Escape" && aberto) {
+
+            fecharPopover(true);
+
+        }
+
+    });
+
+    window.addEventListener("resize", () => {
+
+        if (aberto) posicionarPopover();
+
+    });
+
+    window.addEventListener("scroll", () => {
+
+        if (aberto) posicionarPopover();
+
+    }, { passive: true });
+
+    botaoDenunciar.addEventListener("click", () => {
+
+        if (aberto) fecharPopover();
+
+    });
+
+    renderizar();
+
+}
+
