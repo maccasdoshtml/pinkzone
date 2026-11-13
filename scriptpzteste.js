@@ -1423,6 +1423,12 @@ function iniciarPopupEntrada() {
     const btnEntendi = modal.querySelector("#fecharEntrada");
     if (btnEntendi) btnEntendi.addEventListener("click", fechar);
 
+    modal.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+            try { sessionStorage.setItem("pz_popup_entrada", "1"); } catch (e) {}
+        });
+    });
+
     modal.addEventListener("click", (e) => {
         if (e.target === modal) fechar();
     });
