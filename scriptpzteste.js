@@ -835,22 +835,38 @@ function iniciarContatos() {
     popover.innerHTML = `
         <div class="contatos-topo">
             <div>
-                <h3>Contatos de confiança</h3>
-                <p>Salvos apenas neste navegador.</p>
+                <h3>Contatos e ajuda</h3>
+                <p>Canais oficiais e contatos salvos neste navegador.</p>
             </div>
             <button type="button" class="contatos-fechar" id="fecharContatos" aria-label="Fechar contatos">&times;</button>
         </div>
 
-        <div class="contatos-lista" id="contatosLista"></div>
-
-        <div class="contatos-vazio" id="contatosVazio">
-            Nenhum contato salvo ainda. Cadastre uma pessoa de confiança
-            para acessar o WhatsApp rapidamente.
+        <div class="contatos-emergencia">
+            <h4>Canais oficiais</h4>
+            <a class="contato-emergencia-item" href="tel:190">
+                <strong>190 — Polícia Militar</strong>
+                <small>Emergência e risco imediato</small>
+            </a>
+            <a class="contato-emergencia-item" href="tel:180">
+                <strong>180 — Central de Atendimento à Mulher</strong>
+                <small>Orientação e acolhimento (24h)</small>
+            </a>
+            <a class="contato-emergencia-item" href="https://wa.me/556196100180?text=Ol%C3%A1" target="_blank" rel="noopener">
+                <strong>WhatsApp — Central da Mulher</strong>
+                <small>Atendimento pelo WhatsApp da Central 180</small>
+            </a>
         </div>
 
-        <button type="button" class="contatos-adicionar" id="contatosAdicionar">
-            + Adicionar contato
-        </button>
+        <div class="contatos-secao-pessoal">
+            <h4>Contatos de confiança</h4>
+            <div class="contatos-lista" id="contatosLista"></div>
+            <div class="contatos-vazio" id="contatosVazio">
+                Nenhum contato salvo ainda. Cadastre uma pessoa de confiança para acessar o WhatsApp rapidamente.
+            </div>
+            <button type="button" class="contatos-adicionar" id="contatosAdicionar">
+                + Adicionar contato
+            </button>
+        </div>
 
         <form class="contatos-form" id="contatosForm" novalidate>
             <input type="hidden" id="contatoId">
