@@ -38,6 +38,8 @@ document.addEventListener("DOMContentLoaded",()=>{
     iniciarMenu();
     iniciarSaidaRapida();
     registrarServiceWorker();
+    iniciarPopupEntrada();
+    iniciarLocalizacaoApoio();
 
 });
 
@@ -1399,3 +1401,155 @@ function iniciarContatos() {
 
 }
 
+
+/*====================================================
+    POPUP DE ENTRADA
+=====================================================*/
+
+function iniciarPopupEntrada() {
+
+    const modal = document.getElementById("modalEntrada");
+    if (!modal) return;
+
+    const fechar = () => {
+        modal.classList.remove("ativo");
+        try { sessionStorage.setItem("pz_popup_entrada", "1"); } catch (e) {}
+    };
+
+    const btnFechar = modal.querySelector(".fechar-modal-entrada");
+    if (btnFechar) btnFechar.addEventListener("click", fechar);
+
+    const btnEntendi = modal.querySelector("#fecharEntrada");
+    if (btnEntendi) btnEntendi.addEventListener("click", fechar);
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) fechar();
+    });
+
+    let visto = false;
+    try { visto = sessionStorage.getItem("pz_popup_entrada") === "1"; } catch (e) {}
+    if (!visto) {
+        modal.classList.add("ativo");
+    }
+
+}
+
+/*====================================================
+    LOCALIZAÇÃO - APOIO E POLÍCIA PRÓXIMOS
+=====================================================*/
+
+function iniciarLocalizacaoApoio() {
+    const btn = document.getElementById("btnLocalizacao");
+    const status = document.getElementById("statusLocalizacao");
+    const resultados = document.getElementById("resultadosLocalizacao");
+    if (!btn || !status || !resultados) return;
+
+    const linkDelegacias = document.getElementById("linkMapaDelegacias");
+    const linkPolicia = document.getElementById("linkMapaPolicia");
+
+    function setStatus(msg, tipo) {
+        status.textContent = msg || "";
+        status.className = "localizacao-status" + (tipo ? " " + tipo : "");
+    }
+
+    function distanciaKm(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
+    function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function renderLocais(locais) {
+        if (!locais.length) {
+            resultados.innerHTML = '<div class="card"><p>Não encontramos resultados automáticos próximos. Use os botões acima para buscar no mapa.</p></div>';
+            return;
+        }
+        locais.sort((a,b) => a.dist - b.dist);
+        resultados.innerHTML = locais.slice(0, 12).map(l => {
+            const maps = `https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lon}`;
+            const distTxt = l.dist < 1 ? `${Math.round(l.dist*1000)} m` : `${l.dist.toFixed(1)} km`;
+            return `<div class="card card-apoio">
+                <div class="icone">${l.tipo === 'apoio' ? '💜' : '🚓'}</div>
+                <h3>${escapeHtml(l.nome)}</h3>
+                <span class="distancia">~ ${distTxt} de você</span>
+                ${l.endereco ? `<p class="endereco">${escapeHtml(l.endereco)}</p>` : ''}
+                <p>${l.tipo === 'apoio' ? 'Serviço de apoio/rede de proteção.' : 'Unidade policial/delegacia.'}</p>
+                <a href="${maps}" target="_blank" rel="noopener" class="btn-primary">Ver no mapa</a>
+            </div>`;
+        }).join("");
+    }
+
+    async function buscarOverpass(lat, lon) {
+        const radius = 7000;
+        const query = `[out:json][timeout:25];
+(
+  node["amenity"="police"](around:${radius},${lat},${lon});
+  way["amenity"="police"](around:${radius},${lat},${lon});
+  node["name"~"Mulher|DEAM|CRAM|Casa da Mulher|Referência da Mulher|Defensoria",i](around:${radius},${lat},${lon});
+  way["name"~"Mulher|DEAM|CRAM|Casa da Mulher|Referência da Mulher|Defensoria",i](around:${radius},${lat},${lon});
+  node["social_facility:for"~"woman|women",i](around:${radius},${lat},${lon});
+  way["social_facility:for"~"woman|women",i](around:${radius},${lat},${lon});
+);
+out center tags;`;
+        const url = "https://overpass-api.de/api/interpreter?data=" + encodeURIComponent(query);
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error("Falha na consulta");
+        const data = await resp.json();
+        const vistos = new Set();
+        const locais = [];
+        (data.elements || []).forEach(el => {
+            const elLat = el.lat || (el.center && el.center.lat);
+            const elLon = el.lon || (el.center && el.center.lon);
+            if (elLat == null || elLon == null) return;
+            const tags = el.tags || {};
+            const nome = tags.name || (tags.amenity === "police" ? "Delegacia/Polícia" : "Serviço de apoio");
+            const chave = nome + "|" + elLat.toFixed(4) + "|" + elLon.toFixed(4);
+            if (vistos.has(chave)) return;
+            vistos.add(chave);
+            const endereco = [tags["addr:street"], tags["addr:housenumber"], tags["addr:suburb"], tags["addr:city"]].filter(Boolean).join(", ");
+            const nomeLower = nome.toLowerCase();
+            const tipo = (tags.amenity === "police" && !/mulher|cram|refer|casa da mulher/.test(nomeLower)) ? "policia" : (/mulher|deam|cram|defensoria|refer|casa da mulher|social/.test(nomeLower) || tags["social_facility:for"] ? "apoio" : "policia");
+            locais.push({ nome, lat: elLat, lon: elLon, endereco, tipo, dist: distanciaKm(lat, lon, elLat, elLon) });
+        });
+        return locais;
+    }
+
+    btn.addEventListener("click", async () => {
+        if (!navigator.geolocation) {
+            setStatus("Seu navegador não suporta geolocalização. Use os botões para abrir o mapa.", "erro");
+            return;
+        }
+        setStatus("Obtendo sua localização...", "");
+        resultados.innerHTML = "";
+        btn.disabled = true;
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            const acc = Math.round(pos.coords.accuracy || 0);
+            if (linkDelegacias) linkDelegacias.href = `https://www.google.com/maps/search/delegacia+da+mulher/@${lat},${lon},14z`;
+            if (linkPolicia) linkPolicia.href = `https://www.google.com/maps/search/pol%C3%ADcia+delegacia/@${lat},${lon},14z`;
+            setStatus(`Localização obtida (precisão ~${acc} m). Buscando serviços próximos...`, "");
+            try {
+                const locais = await buscarOverpass(lat, lon);
+                setStatus(locais.length ? `Encontramos ${locais.length} local(is) em até 7 km.` : "Nenhum local cadastrado encontrado automaticamente por perto.", locais.length ? "ok" : "");
+                renderLocais(locais);
+            } catch (e) {
+                setStatus("Não foi possível buscar locais automaticamente. Use os botões para abrir o mapa.", "erro");
+                resultados.innerHTML = '<div class="card"><p>Tente novamente em instantes ou abra o mapa para ver delegacias e polícia próximas.</p></div>';
+            } finally {
+                btn.disabled = false;
+            }
+        }, (err) => {
+            btn.disabled = false;
+            if (err.code === 1) setStatus("Permissão de localização negada. Você pode permitir no navegador ou usar os botões de mapa.", "erro");
+            else if (err.code === 2) setStatus("Localização indisponível no momento. Tente os botões de mapa.", "erro");
+            else if (err.code === 3) setStatus("Tempo esgotado ao obter localização. Tente novamente.", "erro");
+            else setStatus("Não foi possível obter sua localização.", "erro");
+        }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
+    });
+}

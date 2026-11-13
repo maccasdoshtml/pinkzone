@@ -245,6 +245,18 @@ Serviços de emergência disponíveis para proteção.
 
 
 
+<!-- LOCALIZAÇÃO -->
+<section class="localizacao-apoio" id="localizacaoApoio">
+    <h2 class="titulo-secao">Serviços perto de você</h2>
+    <p class="subtitulo-pesquisa">Use sua localização para encontrar delegacias, postos policiais e redes de apoio próximos. Sua localização é usada apenas no seu dispositivo para esta busca.</p>
+    <div class="localizacao-acoes">
+        <button type="button" class="btn-primary" id="btnLocalizacao">📍 Usar minha localização</button>
+        <a id="linkMapaDelegacias" class="btn-secondary" href="https://www.google.com/maps/search/delegacia+da+mulher/" target="_blank" rel="noopener">Delegacias no mapa</a>
+        <a id="linkMapaPolicia" class="btn-secondary" href="https://www.google.com/maps/search/delegacia+policia/" target="_blank" rel="noopener">Polícia no mapa</a>
+    </div>
+    <p id="statusLocalizacao" class="localizacao-status" aria-live="polite"></p>
+    <div id="resultadosLocalizacao" class="grid-layout resultados-localizacao"></div>
+</section>
 <!-- LOCAIS DE APOIO -->
 
 <section class="pesquisa-apoio">
@@ -883,6 +895,44 @@ Ajuda
 
 
 </footer>
+<!-- POPUP DE ENTRADA -->
+<div class="modal-ajuda modal-entrada" id="modalEntrada">
+    <div class="modal-conteudo">
+        <span class="fechar-modal fechar-modal-entrada" aria-label="Fechar">&times;</span>
+        <div class="modal-topo">
+            <div class="modal-icone">💗</div>
+            <h2>Bem-vinda ao PinkZone</h2>
+            <p>Informação rápida: como denunciar e como agir para ajudar com segurança.</p>
+        </div>
+        <div class="entrada-grid">
+            <div class="entrada-bloco">
+                <h3>Como fazer uma denúncia</h3>
+                <ol>
+                    <li><strong>Risco imediato?</strong> Ligue <strong>190</strong> (Polícia Militar) e vá para um local seguro.</li>
+                    <li><strong>Orientação e acolhimento:</strong> ligue <strong>180</strong> (Central de Atendimento à Mulher), gratuito e 24h.</li>
+                    <li><strong>Registrar ocorrência:</strong> procure uma delegacia (preferencialmente da Mulher/DEAM) para o boletim e pedido de medida protetiva.</li>
+                    <li>Se puder, guarde mensagens, fotos ou contatos de testemunhas — mas nunca coloque sua segurança em risco para conseguir provas.</li>
+                </ol>
+            </div>
+            <div class="entrada-bloco">
+                <h3>Como agir para ajudar em uma denúncia</h3>
+                <ul>
+                    <li>Priorize a <strong>segurança da vítima</strong> e a sua; em perigo imediato, acione o <strong>190</strong>.</li>
+                    <li><strong>Acolha sem julgamentos</strong>, ouça e respeite o tempo e as decisões dela.</li>
+                    <li><strong>Não confronte o agressor</strong> e não exponha a vítima publicamente ou nas redes.</li>
+                    <li>Ofereça apoio prático (companhia para ligar/ir à delegacia, local seguro) e indique canais como o <strong>180</strong> e a rede de apoio.</li>
+                    <li>Preserve possíveis provas com consentimento e incentive buscar ajuda especializada.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="entrada-acoes">
+            <a href="denunciar.html" class="btn-primary">Ver como denunciar</a>
+            <a href="apoio.html" class="btn-secondary">Rede de apoio</a>
+            <button type="button" class="btn-secondary" id="fecharEntrada">Entendi</button>
+        </div>
+        <p class="entrada-lembrete">Você não está sozinha. Se estiver em perigo agora, ligue 190.</p>
+    </div>
+</div>
 <!-- POPUP AJUDA -->
 
 <div class="modal-ajuda" id="modalAjuda">
