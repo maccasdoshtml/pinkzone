@@ -3935,3 +3935,15 @@ body.dark-theme .resultados-localizacao .endereco{ color:#bbb; }
 .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
 body.dark-theme .cidade-form select{ background:#2a2a2a; color:#fff; border-color:#444; }
 body.dark-theme .cidade-grupo h3{ color:#ff79a8; }
+/* contatos - canais de emergência */
+.contatos-emergencia{ margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid #eee; }
+.contatos-emergencia h4, .contatos-secao-pessoal h4{ font-size:.95rem; color:var(--rosa-escuro); margin:0 0 8px; }
+.contato-emergencia-item{ display:block; padding:10px 12px; border-radius:12px; background:#fff7fa; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #ffd6e3; }
+.contato-emergencia-item strong{ display:block; font-size:.92rem; }
+.contato-emergencia-item small{ color:var(--cinza); font-size:.82rem; }
+.contato-emergencia-item:hover{ background:#ffe4ec; }
+.contatos-secao-pessoal{ margin-top:4px; }
+body.dark-theme .contatos-emergencia{ border-bottom-color:#444; }
+body.dark-theme .contato-emergencia-item{ background:#2a2a2a; border-color:#444; color:#fff; }
+body.dark-theme .contato-emergencia-item:hover{ background:#3b2b34; }
+body.dark-theme .contatos-emergencia h4, body.dark-theme .contatos-secao-pessoal h4{ color:#ff79a8; }
