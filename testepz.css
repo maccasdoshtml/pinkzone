@@ -3914,3 +3914,24 @@ body.dark-theme .localizacao-status{ color:#bbb; }
 body.dark-theme .localizacao-status.erro{ color:#ff8a80; }
 body.dark-theme .localizacao-status.ok{ color:#a5d6a7; }
 body.dark-theme .resultados-localizacao .endereco{ color:#bbb; }
+/* ===========================================
+   APOIO POR CIDADE (RN)
+=========================================== */
+.apoio-cidade{ margin-bottom:60px; text-align:center; }
+.cidade-form{
+    display:flex; flex-wrap:wrap; gap:12px; justify-content:center; align-items:center; margin:20px 0 10px;
+}
+.cidade-form select{
+    padding:12px 16px; border-radius:12px; border:1px solid #ddd; font-size:1rem; min-width:220px; background:#fff; color:var(--texto);
+}
+.cidade-form select:disabled{ opacity:.8; }
+.resultados-cidade{ margin-top:20px; text-align:left; }
+.cidade-grupo{ margin-bottom:28px; }
+.cidade-grupo h3{ font-size:1.2rem; color:var(--rosa-escuro); margin-bottom:12px; text-align:center; }
+.cidade-grupo .grid-layout{ margin-top:10px; }
+.cidade-grupo .card p{ font-size:.95rem; }
+.mapa-links-cidade{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:10px; }
+.mapa-links-cidade a{ font-size:.9rem; }
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+body.dark-theme .cidade-form select{ background:#2a2a2a; color:#fff; border-color:#444; }
+body.dark-theme .cidade-grupo h3{ color:#ff79a8; }

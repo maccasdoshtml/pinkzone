@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     registrarServiceWorker();
     iniciarPopupEntrada();
     iniciarLocalizacaoApoio();
+    iniciarApoioPorCidadeRN();
 
 });
 
@@ -1552,4 +1553,167 @@ out center tags;`;
             else setStatus("Não foi possível obter sua localização.", "erro");
         }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
     });
+}
+/*====================================================
+    REDE DE APOIO POR CIDADE - RN
+=====================================================*/
+
+function iniciarApoioPorCidadeRN() {
+    const selectCidade = document.getElementById("cidadeRN");
+    const btn = document.getElementById("btnBuscarCidade");
+    const status = document.getElementById("statusCidade");
+    const resultados = document.getElementById("resultadosCidade");
+    if (!selectCidade || !btn || !status || !resultados) return;
+
+    function setStatus(msg, tipo) {
+        status.textContent = msg || "";
+        status.className = "localizacao-status" + (tipo ? " " + tipo : "");
+    }
+
+    function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    async function carregarCidades() {
+        try {
+            const resp = await fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados/24/municipios?orderBy=nome");
+            if (!resp.ok) throw new Error("ibge");
+            const dados = await resp.json();
+            selectCidade.innerHTML = '<option value="">Selecione sua cidade</option>' +
+                dados.map(c => `<option value="${escapeHtml(c.nome)}">${escapeHtml(c.nome)}</option>`).join("");
+        } catch (e) {
+            selectCidade.innerHTML = '<option value="">Não foi possível carregar cidades</option>';
+            setStatus("Erro ao carregar lista de cidades. Tente recarregar a página.", "erro");
+        }
+    }
+
+    function cardLocal(l, tipoLabel) {
+        const maps = `https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lon}`;
+        const icones = { deam: "👮‍♀️", hospital: "🏥", delegacia: "🚓", apoio: "💜" };
+        const ic = icones[l.tipo] || "📍";
+        return `<div class="card card-apoio">
+            <div class="icone">${ic}</div>
+            <h3>${escapeHtml(l.nome)}</h3>
+            ${l.endereco ? `<p class="endereco">${escapeHtml(l.endereco)}</p>` : ''}
+            <p>${escapeHtml(tipoLabel)}</p>
+            <a href="${maps}" target="_blank" rel="noopener" class="btn-primary">Ver no mapa</a>
+        </div>`;
+    }
+
+    function grupo(titulo, itens, tipoLabel, cidade, queryMapa) {
+        const mapLink = `https://www.google.com/maps/search/${encodeURIComponent(queryMapa + " em " + cidade + " RN")}`;
+        let html = `<div class="cidade-grupo"><h3>${escapeHtml(titulo)}</h3>`;
+        if (itens.length) {
+            html += `<div class="grid-layout">${itens.slice(0,8).map(l => cardLocal(l, tipoLabel)).join("")}</div>`;
+        } else {
+            html += `<div class="card"><p>Não encontramos cadastros automáticos desta categoria no OpenStreetMap para ${escapeHtml(cidade)}. Use o mapa para buscar opções atualizadas.</p></div>`;
+        }
+        html += `<div class="mapa-links-cidade"><a class="btn-secondary" href="${mapLink}" target="_blank" rel="noopener">Buscar "${escapeHtml(titulo)}" no mapa</a></div></div>`;
+        return html;
+    }
+
+    async function geocodificarCidade(cidade) {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(cidade + ", Rio Grande do Norte, Brasil")}`;
+        const resp = await fetch(url, { headers: { "Accept-Language": "pt-BR" } });
+        if (!resp.ok) throw new Error("geo");
+        const arr = await resp.json();
+        if (!arr || !arr.length) throw new Error("notfound");
+        return { lat: parseFloat(arr[0].lat), lon: parseFloat(arr[0].lon) };
+    }
+
+    function classificar(tags, nome) {
+        const n = (nome || "").toLowerCase();
+        const amenity = tags.amenity || "";
+        const healthcare = (tags.healthcare || "").toLowerCase();
+        const socFor = (tags["social_facility:for"] || "").toLowerCase();
+        const isDeam = /mulher|deam|ddm|especializada.*mulher|defesa da mulher/.test(n);
+        const isHospitalMulher = (/hospital|maternidade/.test(n) && /mulher|materno|matern/.test(n)) || /hospital da mulher|maternidade/.test(n);
+        const isHospital = amenity === "hospital" || healthcare === "hospital" || /hospital|maternidade|upa|pronto.?socorro/.test(n);
+        const isApoio = /feminist|centro.*mulher|refer[eê]ncia.*mulher|cram|casa da mulher|abrigo|defensoria|creas|cras|conselho.*mulher/.test(n) || socFor.includes("woman") || socFor.includes("women");
+        const isPolicia = amenity === "police" || /delegacia|pol[ií]cia|dpc|dp\b|plant[aã]o policial/.test(n);
+
+        if (isDeam) return "deam";
+        if (isHospitalMulher) return "hospital";
+        if (isApoio && !isPolicia) return "apoio";
+        if (isHospital) return "hospital";
+        if (isPolicia) return "delegacia";
+        return null;
+    }
+
+    async function buscarOverpassCidade(lat, lon) {
+        const radius = 20000;
+        const query = `[out:json][timeout:25];
+(
+  node["amenity"="police"](around:${radius},${lat},${lon});
+  way["amenity"="police"](around:${radius},${lat},${lon});
+  node["amenity"="hospital"](around:${radius},${lat},${lon});
+  way["amenity"="hospital"](around:${radius},${lat},${lon});
+  node["healthcare"="hospital"](around:${radius},${lat},${lon});
+  way["healthcare"="hospital"](around:${radius},${lat},${lon});
+  node["amenity"="social_facility"](around:${radius},${lat},${lon});
+  way["amenity"="social_facility"](around:${radius},${lat},${lon});
+  node["office"~"ngo|government|lawyer",i](around:${radius},${lat},${lon});
+  way["office"~"ngo|government|lawyer",i](around:${radius},${lat},${lon});
+  node["name"~"mulher|femin|matern|delegacia|defensoria|CREAS|CRAS|DEAM",i](around:${radius},${lat},${lon});
+  way["name"~"mulher|femin|matern|delegacia|defensoria|CREAS|CRAS|DEAM",i](around:${radius},${lat},${lon});
+);
+out center tags;`;
+        const url = "https://overpass-api.de/api/interpreter?data=" + encodeURIComponent(query);
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error("overpass");
+        const data = await resp.json();
+        const vistos = new Set();
+        const cats = { apoio: [], deam: [], hospital: [], delegacia: [] };
+        (data.elements || []).forEach(el => {
+            const elLat = el.lat || (el.center && el.center.lat);
+            const elLon = el.lon || (el.center && el.center.lon);
+            if (elLat == null || elLon == null) return;
+            const tags = el.tags || {};
+            const nome = tags.name || "Serviço";
+            const tipo = classificar(tags, nome);
+            if (!tipo) return;
+            const chave = tipo + "|" + nome + "|" + elLat.toFixed(4) + "|" + elLon.toFixed(4);
+            if (vistos.has(chave)) return;
+            vistos.add(chave);
+            const endereco = [tags["addr:street"], tags["addr:housenumber"], tags["addr:suburb"]].filter(Boolean).join(", ");
+            cats[tipo].push({ nome, lat: elLat, lon: elLon, endereco, tipo });
+        });
+        return cats;
+    }
+
+    async function buscarCidade() {
+        const cidade = selectCidade.value;
+        if (!cidade) {
+            setStatus("Selecione uma cidade do RN.", "erro");
+            return;
+        }
+        setStatus(`Buscando serviços em ${cidade}...`, "");
+        resultados.innerHTML = "";
+        btn.disabled = true;
+        try {
+            const { lat, lon } = await geocodificarCidade(cidade);
+            let cats = { apoio: [], deam: [], hospital: [], delegacia: [] };
+            try {
+                cats = await buscarOverpassCidade(lat, lon);
+            } catch (e) { /* segue com links de mapa */ }
+
+            const total = cats.apoio.length + cats.deam.length + cats.hospital.length + cats.delegacia.length;
+            setStatus(total ? `Resultados encontrados para ${cidade} (RN).` : `Mostrando opções de busca no mapa para ${cidade} (RN). Alguns serviços podem não estar cadastrados automaticamente.`, total ? "ok" : "");
+
+            let html = "";
+            html += grupo("Delegacia da Mulher", cats.deam, "Atendimento especializado para mulheres.", cidade, "Delegacia da Mulher");
+            html += grupo("Redes de apoio e centros feministas", cats.apoio, "Rede de apoio, orientação e proteção.", cidade, "centro de referência da mulher OR centro feminista OR CREAS");
+            html += grupo("Hospital da Mulher / maternidade", cats.hospital, "Atendimento de saúde para mulheres.", cidade, "Hospital da Mulher maternidade");
+            html += grupo("Delegacias e polícia", cats.delegacia, "Delegacias e unidades policiais.", cidade, "delegacia polícia");
+            resultados.innerHTML = html;
+        } catch (e) {
+            setStatus("Não foi possível localizar a cidade. Tente novamente.", "erro");
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    btn.addEventListener("click", buscarCidade);
+    selectCidade.addEventListener("change", () => { if (selectCidade.value) buscarCidade(); });
+    carregarCidades();
 }
