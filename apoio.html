@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -9,7 +9,7 @@
 
 <meta name="theme-color" content="#ff4f87">
 
-<meta name="description" content="Rede de apoio e serviços de proteção para mulheres em situação de violência.">
+<meta name="description" content="Rede de apoio e serviÃ§os de proteÃ§Ã£o para mulheres em situaÃ§Ã£o de violÃªncia.">
 
 <meta name="mobile-web-app-capable" content="yes">
 
@@ -45,7 +45,7 @@
 
 <button class="dark-mode-toggle">
 
-🌙
+ðŸŒ™
 
 </button>
 
@@ -58,13 +58,13 @@
 
 <div class="logo">
 
-<span class="logo-icon">🌸</span>
+<span class="logo-icon">ðŸŒ¸</span>
 
 <div class="logo-text">
 
 <h2>PinkZone</h2>
 
-<small>Rosa é sua zona segura</small>
+<small>Rosa Ã© sua zona segura</small>
 
 </div>
 
@@ -76,7 +76,7 @@
 
 <li>
 <a href="testepz.html">
-Início
+InÃ­cio
 </a>
 </li>
 
@@ -109,7 +109,7 @@ Sinais
 
 <button class="menu-alerta" id="abrirAjuda">
 
-    🚨 Denunciar
+    ðŸš¨ Denunciar
 
 </button>
 
@@ -138,7 +138,7 @@ Sinais
 
 <span class="hero-badge">
 
-💗 Rede de proteção feminina
+ðŸ’— Rede de proteÃ§Ã£o feminina
 
 </span>
 
@@ -146,7 +146,7 @@ Sinais
 
 <h1>
 
-Você não está <span>sozinha.</span>
+VocÃª nÃ£o estÃ¡ <span>sozinha.</span>
 
 </h1>
 
@@ -154,9 +154,9 @@ Você não está <span>sozinha.</span>
 
 <p>
 
-Existem serviços especializados preparados para acolher,
-orientar e proteger mulheres em situação de violência.
-Encontrar ajuda é um passo importante.
+Existem serviÃ§os especializados preparados para acolher,
+orientar e proteger mulheres em situaÃ§Ã£o de violÃªncia.
+Encontrar ajuda Ã© um passo importante.
 
 </p>
 
@@ -167,14 +167,14 @@ Encontrar ajuda é um passo importante.
 
 <a href="tel:180" class="btn-primary">
 
-📞 Ligar 180
+ðŸ“ž Ligar 180
 
 </a>
 
 
 <a href="tel:190" class="btn-secondary">
 
-🚔 Emergência 190
+ðŸš” EmergÃªncia 190
 
 </a>
 
@@ -198,7 +198,7 @@ alt="Mulheres recebendo apoio">
 
 </section>
 
-<!-- SERVIÇOS DE EMERGÊNCIA -->
+<!-- SERVIÃ‡OS DE EMERGÃŠNCIA -->
 
 <section class="stats">
 
@@ -208,8 +208,8 @@ alt="Mulheres recebendo apoio">
 <h2>180</h2>
 
 <p>
-Central de Atendimento à Mulher.
-Orientação e informações sobre violência contra a mulher.
+Central de Atendimento Ã  Mulher.
+OrientaÃ§Ã£o e informaÃ§Ãµes sobre violÃªncia contra a mulher.
 </p>
 
 </div>
@@ -221,7 +221,7 @@ Orientação e informações sobre violência contra a mulher.
 <h2>190</h2>
 
 <p>
-Polícia Militar para situações de emergência e risco imediato.
+PolÃ­cia Militar para situaÃ§Ãµes de emergÃªncia e risco imediato.
 </p>
 
 </div>
@@ -233,7 +233,7 @@ Polícia Militar para situações de emergência e risco imediato.
 <h2>24h</h2>
 
 <p>
-Serviços de emergência disponíveis para proteção.
+ServiÃ§os de emergÃªncia disponÃ­veis para proteÃ§Ã£o.
 </p>
 
 </div>
@@ -245,6 +245,18 @@ Serviços de emergência disponíveis para proteção.
 
 
 
+<!-- LOCALIZAÇÃO -->
+<section class="localizacao-apoio" id="localizacaoApoio">
+    <h2 class="titulo-secao">Serviços perto de você</h2>
+    <p class="subtitulo-pesquisa">Use sua localização para encontrar delegacias, postos policiais e redes de apoio próximos. Sua localização é usada apenas no seu dispositivo para esta busca.</p>
+    <div class="localizacao-acoes">
+        <button type="button" class="btn-primary" id="btnLocalizacao">📍 Usar minha localização</button>
+        <a id="linkMapaDelegacias" class="btn-secondary" href="https://www.google.com/maps/search/delegacia+da+mulher/" target="_blank" rel="noopener">Delegacias no mapa</a>
+        <a id="linkMapaPolicia" class="btn-secondary" href="https://www.google.com/maps/search/delegacia+policia/" target="_blank" rel="noopener">Polícia no mapa</a>
+    </div>
+    <p id="statusLocalizacao" class="localizacao-status" aria-live="polite"></p>
+    <div id="resultadosLocalizacao" class="grid-layout resultados-localizacao"></div>
+</section>
 <!-- LOCAIS DE APOIO -->
 
 <section class="pesquisa-apoio">
@@ -254,20 +266,20 @@ Serviços de emergência disponíveis para proteção.
     </h2>
 
     <p class="subtitulo-pesquisa">
-        Digite o nome do serviço ou uma palavra-chave.
+        Digite o nome do serviÃ§o ou uma palavra-chave.
     </p>
 
     <input
         type="text"
         id="pesquisaApoio"
-        placeholder="🔍 Ex.: delegacia, hospital, defensoria..."
+        placeholder="ðŸ” Ex.: delegacia, hospital, defensoria..."
     >
 
 </section>
 
 <h2 class="titulo-secao">
 
-Locais de apoio em Mossoró
+Locais de apoio em MossorÃ³
 
 </h2>
 
@@ -282,7 +294,7 @@ Locais de apoio em Mossoró
 
 <div class="icone">
 
-👮
+ðŸ‘®
 
 </div>
 
@@ -298,8 +310,8 @@ Delegacia da Mulher (DEAM)
 
 <p>
 
-Atendimento especializado para mulheres vítimas de violência.
-Auxilia no registro de ocorrências e encaminhamentos necessários.
+Atendimento especializado para mulheres vÃ­timas de violÃªncia.
+Auxilia no registro de ocorrÃªncias e encaminhamentos necessÃ¡rios.
 
 </p>
 
@@ -307,7 +319,7 @@ Auxilia no registro de ocorrências e encaminhamentos necessários.
 
 <a href="https://maps.app.goo.gl/kre37U2FeP7km3v39" target="_blank" class="btn-primary">
 
-📍 Localizar
+ðŸ“ Localizar
 
 </a>
 
@@ -323,7 +335,7 @@ Auxilia no registro de ocorrências e encaminhamentos necessários.
 
 <div class="icone">
 
-💗
+ðŸ’—
 
 </div>
 
@@ -331,7 +343,7 @@ Auxilia no registro de ocorrências e encaminhamentos necessários.
 
 <h3>
 
-Centro de Referência da Mulher Brasileira
+Centro de ReferÃªncia da Mulher Brasileira
 
 </h3>
 
@@ -339,8 +351,8 @@ Centro de Referência da Mulher Brasileira
 
 <p>
 
-Espaço de acolhimento, orientação e atendimento para mulheres
-em situação de violência.
+EspaÃ§o de acolhimento, orientaÃ§Ã£o e atendimento para mulheres
+em situaÃ§Ã£o de violÃªncia.
 
 </p>
 
@@ -364,7 +376,7 @@ em situação de violência.
 
 <div class="icone">
 
-⚖️
+âš–ï¸
 
 </div>
 
@@ -372,7 +384,7 @@ em situação de violência.
 
 <h3>
 
-Defensoria Pública
+Defensoria PÃºblica
 
 </h3>
 
@@ -380,7 +392,7 @@ Defensoria Pública
 
 <p>
 
-Oferece orientação jurídica gratuita e auxilia mulheres
+Oferece orientaÃ§Ã£o jurÃ­dica gratuita e auxilia mulheres
 na busca pelos seus direitos.
 
 </p>
@@ -389,7 +401,7 @@ na busca pelos seus direitos.
 
 <a href="#" class="btn-primary">
 
-⚖️ Saiba mais
+âš–ï¸ Saiba mais
 
 </a>
 
@@ -405,7 +417,7 @@ na busca pelos seus direitos.
 
 <div class="icone">
 
-🏥
+ðŸ¥
 
 </div>
 
@@ -421,8 +433,8 @@ Hospital Regional da Mulher
 
 <p>
 
-Atendimento de saúde para mulheres, incluindo cuidados
-e encaminhamentos necessários.
+Atendimento de saÃºde para mulheres, incluindo cuidados
+e encaminhamentos necessÃ¡rios.
 
 </p>
 
@@ -430,7 +442,7 @@ e encaminhamentos necessários.
 
 <a href="tel:8433173101" class="btn-primary">
 
-📞 Contato
+ðŸ“ž Contato
 
 </a>
 
@@ -446,7 +458,7 @@ e encaminhamentos necessários.
 
 <div class="icone">
 
-🤝
+ðŸ¤
 
 </div>
 
@@ -454,7 +466,7 @@ e encaminhamentos necessários.
 
 <h3>
 
-Centro Feminista 8 de Março
+Centro Feminista 8 de MarÃ§o
 
 </h3>
 
@@ -462,8 +474,8 @@ Centro Feminista 8 de Março
 
 <p>
 
-Organização que atua na defesa dos direitos das mulheres
-e no enfrentamento da violência.
+OrganizaÃ§Ã£o que atua na defesa dos direitos das mulheres
+e no enfrentamento da violÃªncia.
 
 </p>
 
@@ -486,7 +498,7 @@ Conhecer
 
 <div class="icone">
 
-❤️
+â¤ï¸
 
 </div>
 
@@ -494,7 +506,7 @@ Conhecer
 
 <h3>
 
-Você merece apoio
+VocÃª merece apoio
 
 </h3>
 
@@ -502,8 +514,8 @@ Você merece apoio
 
 <p>
 
-Buscar ajuda é um ato de coragem.
-Nenhuma mulher deve enfrentar uma situação de violência sozinha.
+Buscar ajuda Ã© um ato de coragem.
+Nenhuma mulher deve enfrentar uma situaÃ§Ã£o de violÃªncia sozinha.
 
 </p>
 
@@ -519,7 +531,7 @@ Nenhuma mulher deve enfrentar uma situação de violência sozinha.
 </section>
 
 
-<!-- PLANO DE SEGURANÇA -->
+<!-- PLANO DE SEGURANÃ‡A -->
 
 <section class="about-home">
 
@@ -529,7 +541,7 @@ Nenhuma mulher deve enfrentar uma situação de violência sozinha.
 
 <h2>
 
-🛡️ Plano de segurança
+ðŸ›¡ï¸ Plano de seguranÃ§a
 
 </h2>
 
@@ -537,8 +549,8 @@ Nenhuma mulher deve enfrentar uma situação de violência sozinha.
 
 <p>
 
-Em uma situação de risco, algumas atitudes podem ajudar a preservar
-sua segurança e facilitar o acesso ao apoio necessário.
+Em uma situaÃ§Ã£o de risco, algumas atitudes podem ajudar a preservar
+sua seguranÃ§a e facilitar o acesso ao apoio necessÃ¡rio.
 
 </p>
 
@@ -546,15 +558,15 @@ sua segurança e facilitar o acesso ao apoio necessário.
 
 <p>
 
-<strong>Antes de uma emergência:</strong>
+<strong>Antes de uma emergÃªncia:</strong>
 
 <br><br>
 
-✔ Guarde documentos importantes em um local seguro.<br>
+âœ” Guarde documentos importantes em um local seguro.<br>
 
-✔ Tenha contatos de confiança salvos.<br>
+âœ” Tenha contatos de confianÃ§a salvos.<br>
 
-✔ Conheça os locais onde você pode buscar ajuda.
+âœ” ConheÃ§a os locais onde vocÃª pode buscar ajuda.
 
 </p>
 
@@ -562,15 +574,15 @@ sua segurança e facilitar o acesso ao apoio necessário.
 
 <p>
 
-<strong>Durante uma situação de perigo:</strong>
+<strong>Durante uma situaÃ§Ã£o de perigo:</strong>
 
 <br><br>
 
-✔ Procure um ambiente seguro.<br>
+âœ” Procure um ambiente seguro.<br>
 
-✔ Evite locais onde existam objetos que possam causar ferimentos.<br>
+âœ” Evite locais onde existam objetos que possam causar ferimentos.<br>
 
-✔ Peça ajuda quando sentir que está em risco.
+âœ” PeÃ§a ajuda quando sentir que estÃ¡ em risco.
 
 </p>
 
@@ -591,7 +603,7 @@ sua segurança e facilitar o acesso ao apoio necessário.
 
 <h2 class="titulo-secao">
 
-Pessoas de confiança também ajudam
+Pessoas de confianÃ§a tambÃ©m ajudam
 
 </h2>
 
@@ -606,7 +618,7 @@ Pessoas de confiança também ajudam
 
 <div class="icone">
 
-👩‍👧
+ðŸ‘©â€ðŸ‘§
 
 </div>
 
@@ -614,7 +626,7 @@ Pessoas de confiança também ajudam
 
 <h3>
 
-Família e amigos
+FamÃ­lia e amigos
 
 </h3>
 
@@ -622,8 +634,8 @@ Família e amigos
 
 <p>
 
-Pessoas próximas podem oferecer apoio emocional,
-ajudar na busca por serviços e acompanhar a vítima
+Pessoas prÃ³ximas podem oferecer apoio emocional,
+ajudar na busca por serviÃ§os e acompanhar a vÃ­tima
 durante esse processo.
 
 </p>
@@ -640,7 +652,7 @@ durante esse processo.
 
 <div class="icone">
 
-🤝
+ðŸ¤
 
 </div>
 
@@ -656,7 +668,7 @@ Rede de apoio
 
 <p>
 
-Construir uma rede de pessoas confiáveis pode tornar
+Construir uma rede de pessoas confiÃ¡veis pode tornar
 a busca por ajuda mais segura.
 
 </p>
@@ -673,7 +685,7 @@ a busca por ajuda mais segura.
 
 <div class="icone">
 
-💬
+ðŸ’¬
 
 </div>
 
@@ -689,8 +701,8 @@ Converse quando se sentir segura
 
 <p>
 
-Compartilhar uma situação de violência com alguém de confiança
-pode ser um primeiro passo para encontrar proteção.
+Compartilhar uma situaÃ§Ã£o de violÃªncia com alguÃ©m de confianÃ§a
+pode ser um primeiro passo para encontrar proteÃ§Ã£o.
 
 </p>
 
@@ -716,7 +728,7 @@ pode ser um primeiro passo para encontrar proteção.
 
 <h2>
 
-Você não está sozinha.
+VocÃª nÃ£o estÃ¡ sozinha.
 
 </h2>
 
@@ -724,8 +736,8 @@ Você não está sozinha.
 
 <p>
 
-Pedir ajuda não é sinal de fraqueza.
-É um ato de coragem.
+Pedir ajuda nÃ£o Ã© sinal de fraqueza.
+Ã‰ um ato de coragem.
 
 </p>
 
@@ -733,7 +745,7 @@ Pedir ajuda não é sinal de fraqueza.
 
 <a href="denunciar.html" class="btn-primary">
 
-🚨 Quero buscar ajuda
+ðŸš¨ Quero buscar ajuda
 
 </a>
 
@@ -746,18 +758,18 @@ Pedir ajuda não é sinal de fraqueza.
 </main>
 
 
-<!-- BOTÃO DE SAÍDA RÁPIDA -->
+<!-- BOTÃƒO DE SAÃDA RÃPIDA -->
 
 <a href="https://www.google.com" class="quick-exit">
 
-🚪 Sair rapidamente
+ðŸšª Sair rapidamente
 
 </a>
 
 
 
 
-<!-- RODAPÉ -->
+<!-- RODAPÃ‰ -->
 
 <footer>
 
@@ -770,7 +782,7 @@ Pedir ajuda não é sinal de fraqueza.
 
 <h2>
 
-PinkZone 🌸
+PinkZone ðŸŒ¸
 
 </h2>
 
@@ -778,8 +790,8 @@ PinkZone 🌸
 
 <p>
 
-Uma plataforma de informação, acolhimento e orientação
-para mulheres em situação de violência.
+Uma plataforma de informaÃ§Ã£o, acolhimento e orientaÃ§Ã£o
+para mulheres em situaÃ§Ã£o de violÃªncia.
 
 </p>
 
@@ -794,14 +806,14 @@ para mulheres em situação de violência.
 
 <h3>
 
-Navegação
+NavegaÃ§Ã£o
 
 </h3>
 
 
 <a href="testepz.html">
 
-Início
+InÃ­cio
 
 </a>
 
@@ -845,21 +857,21 @@ Ajuda
 
 <a href="tel:180">
 
-📞 Central 180
+ðŸ“ž Central 180
 
 </a>
 
 
 <a href="tel:190">
 
-🚔 Emergência 190
+ðŸš” EmergÃªncia 190
 
 </a>
 
 
 <a href="#">
 
-🔒 Privacidade
+ðŸ”’ Privacidade
 
 </a>
 
@@ -876,13 +888,52 @@ Ajuda
 
 <p class="footer-copy">
 
-© 2026 PinkZone - Rosa é sua zona segura.
+Â© 2026 PinkZone - Rosa Ã© sua zona segura.
 
 </p>
 
 
 
 </footer>
+<!-- POPUP DE ENTRADA -->
+<div class="modal-ajuda modal-entrada" id="modalEntrada">
+    <div class="modal-conteudo">
+        <span class="fechar-modal fechar-modal-entrada" aria-label="Fechar">&times;</span>
+        <div class="modal-topo">
+            <div class="modal-icone">💗</div>
+            <h2>Bem-vinda ao PinkZone</h2>
+            <p>Informação rápida: como denunciar e como ajudar com segurança.</p>
+        </div>
+        <div class="entrada-grid">
+            <div class="entrada-bloco">
+                <h3>Como fazer uma denúncia</h3>
+                <ol>
+                    <li><strong>Risco imediato?</strong> Ligue <strong>190</strong> (Polícia Militar) e vá para um local seguro.</li>
+                    <li><strong>Orientação e acolhimento:</strong> ligue <strong>180</strong> (Central de Atendimento à Mulher), gratuito e 24h.</li>
+                    <li><strong>Registrar ocorrência:</strong> procure uma Delegacia (preferencialmente da Mulher/DEAM) para o boletim e pedido de medida protetiva.</li>
+                    <li>Se puder, guarde mensagens, fotos ou contatos de testemunhas — mas nunca coloque sua segurança em risco para conseguir provas.</li>
+                </ol>
+            </div>
+            <div class="entrada-bloco">
+                <h3>Como agir para ajudar em uma denúncia</h3>
+                <ul>
+                    <li>Priorize a <strong>segurança da vítima</strong> e a sua; em perigo imediato, acione o <strong>190</strong>.</li>
+                    <li><strong>Acolha sem julgamentos</strong>, ouça e respeite o tempo e as decisões dela.</li>
+                    <li><strong>Não confronte o agressor</strong> e não exponha a vítima publicamente ou nas redes.</li>
+                    <li>Ofereça apoio prático (companhia para ligar/ir à delegacia, local seguro) e indique canais como o <strong>180</strong> e a rede de apoio.</li>
+                    <li>Preserve possíveis provas com consentimento e incentive buscar ajuda especializada.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="entrada-acoes">
+            <a href="denunciar.html" class="btn-primary">Ver como denunciar</a>
+            <a href="apoio.html" class="btn-secondary">Rede de apoio</a>
+            <button type="button" class="btn-secondary" id="fecharEntrada">Entendi</button>
+        </div>
+        <p class="entrada-lembrete">Você não está sozinha. Se estiver em perigo agora, ligue 190.</p>
+    </div>
+</div>
+
 <!-- POPUP AJUDA -->
 
 <div class="modal-ajuda" id="modalAjuda">
@@ -891,7 +942,7 @@ Ajuda
 
         <span class="fechar-modal" id="fecharAjuda">
 
-            ✖
+            âœ–
 
         </span>
 
@@ -899,7 +950,7 @@ Ajuda
 
             <div class="modal-icone">
 
-                🚨
+                ðŸš¨
 
             </div>
 
@@ -923,11 +974,11 @@ Ajuda
                target="_blank"
                class="opcao-ajuda whatsapp">
 
-                🟢
+                ðŸŸ¢
 
                 <div>
 
-                    <strong>WhatsApp - Central de Atendimento às Mulheres</strong>
+                    <strong>WhatsApp - Central de Atendimento Ã s Mulheres</strong>
 
                     <small>Conversar agora</small>
 
@@ -939,7 +990,7 @@ Ajuda
 
                class="opcao-ajuda telefone">
 
-                📞
+                ðŸ“ž
 
                 <div>
 
@@ -955,13 +1006,13 @@ Ajuda
 
                class="opcao-ajuda policia">
 
-                🚔
+                ðŸš”
 
                 <div>
 
-                    <strong>Emergência 190</strong>
+                    <strong>EmergÃªncia 190</strong>
 
-                    <small>Polícia Militar</small>
+                    <small>PolÃ­cia Militar</small>
 
                 </div>
 
@@ -981,3 +1032,5 @@ Ajuda
 </body>
 
 </html>
+
+

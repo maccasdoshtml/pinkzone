@@ -1,4 +1,4 @@
-/*====================================================
+﻿/*====================================================
     PINKZONE 2.0
     Desenvolvido em JavaScript puro
 ====================================================*/
@@ -38,6 +38,8 @@ document.addEventListener("DOMContentLoaded",()=>{
     iniciarMenu();
     iniciarSaidaRapida();
     registrarServiceWorker();
+    iniciarPopupEntrada();
+    iniciarLocalizacaoApoio();
 
 });
 
@@ -126,7 +128,7 @@ function iniciarScrollSuave() {
 }
 
 /*====================================================
-    ANIMAÇÕES AO ROLAR
+    ANIMAÃ‡Ã•ES AO ROLAR
 =====================================================*/
 
 function iniciarAnimacoesScroll() {
@@ -209,7 +211,7 @@ function aplicarTema(escuro) {
 
     document.querySelectorAll(".dark-mode-toggle").forEach(botao => {
 
-        botao.innerHTML = escuro ? "☀️" : "🌙";
+        botao.innerHTML = escuro ? "â˜€ï¸" : "ðŸŒ™";
         botao.setAttribute("aria-label", escuro ? "Ativar tema claro" : "Ativar tema escuro");
         botao.setAttribute("title", escuro ? "Tema claro" : "Tema escuro");
 
@@ -218,7 +220,7 @@ function aplicarTema(escuro) {
     document.querySelectorAll(".tema-mobile").forEach(botao => {
 
         botao.innerHTML = `
-            <span class="tema-icone">${escuro ? "☀️" : "🌙"}</span>
+            <span class="tema-icone">${escuro ? "â˜€ï¸" : "ðŸŒ™"}</span>
             <span>${escuro ? "Tema claro" : "Tema escuro"}</span>
         `;
         botao.setAttribute("aria-label", escuro ? "Ativar tema claro" : "Ativar tema escuro");
@@ -232,7 +234,7 @@ function aplicarTema(escuro) {
 }
 
 /*====================================================
-    BOTÃO VOLTAR AO TOPO
+    BOTÃƒO VOLTAR AO TOPO
 =====================================================*/
 
 function criarBotaoTopo(){
@@ -241,7 +243,7 @@ function criarBotaoTopo(){
 
     botao.type="button";
     botao.className="back-to-top";
-    botao.innerHTML="↑";
+    botao.innerHTML="â†‘";
     botao.setAttribute("aria-label","Voltar ao topo");
     botao.setAttribute("title","Voltar ao topo");
 
@@ -429,7 +431,7 @@ function iniciarMenuMobile() {
     botaoTema.type = "button";
     botaoTema.className = "tema-mobile";
     botaoTema.setAttribute("aria-label", "Ativar tema escuro");
-    botaoTema.textContent = "🌙";
+    botaoTema.textContent = "ðŸŒ™";
 
     itemTema.appendChild(botaoTema);
     lista.appendChild(itemTema);
@@ -531,7 +533,7 @@ function iniciarMenuMobile() {
 }
 
 /*====================================================
-    SAÍDA RÁPIDA
+    SAÃDA RÃPIDA
 ====================================================*/
 
 function iniciarSaidaRapida() {
@@ -627,9 +629,9 @@ if(botaoQuiz){
         if(total==0){
 
             resultado.innerHTML=`
-            🌸 Você não marcou nenhum dos sinais apresentados.
+            ðŸŒ¸ VocÃª nÃ£o marcou nenhum dos sinais apresentados.
 
-            Mesmo assim, conhecer seus direitos e saber onde buscar ajuda é sempre importante.
+            Mesmo assim, conhecer seus direitos e saber onde buscar ajuda Ã© sempre importante.
             `;
 
             resultado.style.background="#ffe4ec";
@@ -639,9 +641,9 @@ if(botaoQuiz){
         else if(total<=2){
 
             resultado.innerHTML=`
-            💗 Você marcou alguns sinais.
+            ðŸ’— VocÃª marcou alguns sinais.
 
-            Vale a pena conversar com alguém de confiança e observar se esses comportamentos se repetem.
+            Vale a pena conversar com alguÃ©m de confianÃ§a e observar se esses comportamentos se repetem.
             `;
 
             resultado.style.background="#fff3cd";
@@ -651,11 +653,11 @@ if(botaoQuiz){
         else if(total<=4){
 
             resultado.innerHTML=`
-            ⚠️ Atenção.
+            âš ï¸ AtenÃ§Ã£o.
 
-            Você marcou diversos comportamentos que podem indicar uma relação abusiva.
+            VocÃª marcou diversos comportamentos que podem indicar uma relaÃ§Ã£o abusiva.
 
-            Considere procurar orientação e conhecer a Rede de Apoio.
+            Considere procurar orientaÃ§Ã£o e conhecer a Rede de Apoio.
             `;
 
             resultado.style.background="#ffd6a5";
@@ -665,13 +667,13 @@ if(botaoQuiz){
         else{
 
             resultado.innerHTML=`
-            🚨 Foram identificados vários sinais preocupantes.
+            ðŸš¨ Foram identificados vÃ¡rios sinais preocupantes.
 
-            Se você se sentir em risco, procure ajuda imediatamente.
+            Se vocÃª se sentir em risco, procure ajuda imediatamente.
 
-            Ligue para o 180 ou, em caso de emergência, para o 190.
+            Ligue para o 180 ou, em caso de emergÃªncia, para o 190.
 
-            Você não está sozinha.
+            VocÃª nÃ£o estÃ¡ sozinha.
             `;
 
             resultado.style.background="#ffccd5";
@@ -715,29 +717,29 @@ document.addEventListener("DOMContentLoaded", () => {
         if (total === 0) {
 
             resultado.innerHTML = `
-                <h3>🌸 Nenhum sinal marcado</h3>
-                <p>Você não marcou nenhuma situação. Mesmo assim, conhecer seus direitos e a rede de apoio é sempre importante.</p>
+                <h3>ðŸŒ¸ Nenhum sinal marcado</h3>
+                <p>VocÃª nÃ£o marcou nenhuma situaÃ§Ã£o. Mesmo assim, conhecer seus direitos e a rede de apoio Ã© sempre importante.</p>
             `;
 
         } else if (total <= 2) {
 
             resultado.innerHTML = `
-                <h3>💗 Atenção</h3>
-                <p>Você marcou alguns comportamentos que merecem atenção. Conversar com alguém de confiança pode ser um bom primeiro passo.</p>
+                <h3>ðŸ’— AtenÃ§Ã£o</h3>
+                <p>VocÃª marcou alguns comportamentos que merecem atenÃ§Ã£o. Conversar com alguÃ©m de confianÃ§a pode ser um bom primeiro passo.</p>
             `;
 
         } else if (total <= 4) {
 
             resultado.innerHTML = `
-                <h3>⚠️ Sinais importantes</h3>
-                <p>Você identificou diversos comportamentos que podem indicar uma relação abusiva. Procure conhecer seus direitos e a rede de apoio.</p>
+                <h3>âš ï¸ Sinais importantes</h3>
+                <p>VocÃª identificou diversos comportamentos que podem indicar uma relaÃ§Ã£o abusiva. Procure conhecer seus direitos e a rede de apoio.</p>
             `;
 
         } else {
 
             resultado.innerHTML = `
-                <h3>🚨 Procure ajuda</h3>
-                <p>Você marcou muitos sinais preocupantes. Se estiver em risco, procure um local seguro e utilize os canais de apoio, como o 180 ou, em caso de emergência, o 190.</p>
+                <h3>ðŸš¨ Procure ajuda</h3>
+                <p>VocÃª marcou muitos sinais preocupantes. Se estiver em risco, procure um local seguro e utilize os canais de apoio, como o 180 ou, em caso de emergÃªncia, o 190.</p>
             `;
 
         }
@@ -789,7 +791,7 @@ if (abrirAjuda && modalAjuda && fecharAjuda) {
 }
 
 /* ==========================================
-   CONTATOS DE CONFIANÇA
+   CONTATOS DE CONFIANÃ‡A
 ========================================== */
 
 const CHAVE_CONTATOS = "pinkzone_contatos";
@@ -827,12 +829,12 @@ function iniciarContatos() {
     popover.className = "contatos-popover";
     popover.id = "contatosPopover";
     popover.setAttribute("role", "dialog");
-    popover.setAttribute("aria-label", "Contatos de confiança");
+    popover.setAttribute("aria-label", "Contatos de confianÃ§a");
 
     popover.innerHTML = `
         <div class="contatos-topo">
             <div>
-                <h3>Contatos de confiança</h3>
+                <h3>Contatos de confianÃ§a</h3>
                 <p>Salvos apenas neste navegador.</p>
             </div>
             <button type="button" class="contatos-fechar" id="fecharContatos" aria-label="Fechar contatos">&times;</button>
@@ -841,7 +843,7 @@ function iniciarContatos() {
         <div class="contatos-lista" id="contatosLista"></div>
 
         <div class="contatos-vazio" id="contatosVazio">
-            Nenhum contato salvo ainda. Cadastre uma pessoa de confiança
+            Nenhum contato salvo ainda. Cadastre uma pessoa de confianÃ§a
             para acessar o WhatsApp rapidamente.
         </div>
 
@@ -858,12 +860,12 @@ function iniciarContatos() {
             <label for="contatoParentesco">Grau de parentesco</label>
             <select id="contatoParentesco" required>
                 <option value="">Selecione...</option>
-                <option>Mãe</option>
+                <option>MÃ£e</option>
                 <option>Pai</option>
-                <option>Irmã</option>
-                <option>Irmão</option>
-                <option>Avó</option>
-                <option>Avô</option>
+                <option>IrmÃ£</option>
+                <option>IrmÃ£o</option>
+                <option>AvÃ³</option>
+                <option>AvÃ´</option>
                 <option>Tia</option>
                 <option>Tio</option>
                 <option>Prima</option>
@@ -876,7 +878,7 @@ function iniciarContatos() {
                 <option>Outro</option>
             </select>
 
-            <label for="contatoTelefone">Telefone (DDD + número)</label>
+            <label for="contatoTelefone">Telefone (DDD + nÃºmero)</label>
             <input type="tel" id="contatoTelefone" inputmode="numeric" maxlength="24" autocomplete="tel" placeholder="84998213691" required>
 
             <small class="contatos-erro" id="contatosErro" role="alert"></small>
@@ -1052,14 +1054,14 @@ function iniciarContatos() {
             nome.textContent = contato.nome;
 
             const detalhe = document.createElement("small");
-            detalhe.textContent = `${contato.parentesco} • ${formatarTelefone(contato.telefone)}`;
+            detalhe.textContent = `${contato.parentesco} â€¢ ${formatarTelefone(contato.telefone)}`;
 
             info.appendChild(nome);
             info.appendChild(detalhe);
 
             const seta = document.createElement("span");
             seta.className = "contato-seta";
-            seta.textContent = "›";
+            seta.textContent = "â€º";
 
             botaoNome.appendChild(avatar);
             botaoNome.appendChild(info);
@@ -1114,7 +1116,7 @@ function iniciarContatos() {
 
                 if (!salvarNoNavegador()) {
 
-                    mostrarStatus("Não foi possível excluir neste navegador.", true);
+                    mostrarStatus("NÃ£o foi possÃ­vel excluir neste navegador.", true);
                     return;
 
                 }
@@ -1122,7 +1124,7 @@ function iniciarContatos() {
                 if (editandoId === contato.id) fecharFormulario();
 
                 renderizar();
-                mostrarStatus("Contato excluído.");
+                mostrarStatus("Contato excluÃ­do.");
 
             });
 
@@ -1138,7 +1140,7 @@ function iniciarContatos() {
         campoParentesco.value = contato ? contato.parentesco : "";
         campoTelefone.value = contato ? contato.telefone : "";
         erro.textContent = "";
-        botaoSalvar.textContent = contato ? "Salvar alterações" : "Salvar";
+        botaoSalvar.textContent = contato ? "Salvar alteraÃ§Ãµes" : "Salvar";
 
         form.style.display = "flex";
         lista.style.display = "none";
@@ -1309,7 +1311,7 @@ function iniciarContatos() {
 
         if (!telefoneValido(telefone)) {
 
-            erro.textContent = "Digite o telefone com DDD, só números. Ex.: 84998213691.";
+            erro.textContent = "Digite o telefone com DDD, sÃ³ nÃºmeros. Ex.: 84998213691.";
             campoTelefone.focus();
             return;
 
@@ -1340,7 +1342,7 @@ function iniciarContatos() {
 
         if (!salvarNoNavegador()) {
 
-            erro.textContent = "Não foi possível salvar. Verifique se o navegador permite armazenamento.";
+            erro.textContent = "NÃ£o foi possÃ­vel salvar. Verifique se o navegador permite armazenamento.";
             return;
 
         }
@@ -1397,5 +1399,159 @@ function iniciarContatos() {
 
     renderizar();
 
+}
+
+
+/*====================================================
+    POPUP DE ENTRADA
+=====================================================*/
+
+function iniciarPopupEntrada() {
+
+    const modal = document.getElementById("modalEntrada");
+    if (!modal) return;
+
+    const fechar = () => {
+        modal.classList.remove("ativo");
+        try { sessionStorage.setItem("pz_popup_entrada", "1"); } catch (e) {}
+    };
+
+    const btnFechar = modal.querySelector(".fechar-modal-entrada");
+    if (btnFechar) btnFechar.addEventListener("click", fechar);
+
+    const btnEntendi = modal.querySelector("#fecharEntrada");
+    if (btnEntendi) btnEntendi.addEventListener("click", fechar);
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) fechar();
+    });
+
+    let visto = false;
+    try { visto = sessionStorage.getItem("pz_popup_entrada") === "1"; } catch (e) {}
+    if (!visto) {
+        modal.classList.add("ativo");
+    }
+
+}
+
+
+/*====================================================
+    LOCALIZAÇÃO - APOIO E POLÍCIA PRÓXIMOS
+=====================================================*/
+
+function iniciarLocalizacaoApoio() {
+    const btn = document.getElementById("btnLocalizacao");
+    const status = document.getElementById("statusLocalizacao");
+    const resultados = document.getElementById("resultadosLocalizacao");
+    if (!btn || !status || !resultados) return;
+
+    const linkDelegacias = document.getElementById("linkMapaDelegacias");
+    const linkPolicia = document.getElementById("linkMapaPolicia");
+
+    function setStatus(msg, tipo) {
+        status.textContent = msg || "";
+        status.className = "localizacao-status" + (tipo ? " " + tipo : "");
+    }
+
+    function distanciaKm(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
+    function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function renderLocais(locais, lat, lon) {
+        if (!locais.length) {
+            resultados.innerHTML = '<div class="card"><p>Não encontramos resultados automáticos próximos. Use os botões acima para buscar no mapa.</p></div>';
+            return;
+        }
+        locais.sort((a,b) => a.dist - b.dist);
+        resultados.innerHTML = locais.slice(0, 12).map(l => {
+            const maps = `https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lon}`;
+            const distTxt = l.dist < 1 ? `${Math.round(l.dist*1000)} m` : `${l.dist.toFixed(1)} km`;
+            return `<div class="card card-apoio">
+                <div class="icone">${l.tipo === 'apoio' ? '💜' : '🚓'}</div>
+                <h3>${escapeHtml(l.nome)}</h3>
+                <span class="distancia">~ ${distTxt} de você</span>
+                ${l.endereco ? `<p class="endereco">${escapeHtml(l.endereco)}</p>` : ''}
+                <p>${l.tipo === 'apoio' ? 'Serviço de apoio/rede de proteção.' : 'Unidade policial/delegacia.'}</p>
+                <a href="${maps}" target="_blank" rel="noopener" class="btn-primary">Ver no mapa</a>
+            </div>`;
+        }).join("");
+    }
+
+    async function buscarOverpass(lat, lon) {
+        const radius = 7000;
+        const query = `[out:json][timeout:25];
+(
+  node["amenity"="police"](around:${radius},${lat},${lon});
+  way["amenity"="police"](around:${radius},${lat},${lon});
+  node["name"~"Mulher|DEAM|CRAM|Casa da Mulher|Referência da Mulher|Defensoria",i](around:${radius},${lat},${lon});
+  way["name"~"Mulher|DEAM|CRAM|Casa da Mulher|Referência da Mulher|Defensoria",i](around:${radius},${lat},${lon});
+  node["social_facility:for"~"woman|women",i](around:${radius},${lat},${lon});
+  way["social_facility:for"~"woman|women",i](around:${radius},${lat},${lon});
+);
+out center tags;`;
+        const url = "https://overpass-api.de/api/interpreter?data=" + encodeURIComponent(query);
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error("Falha na consulta de locais");
+        const data = await resp.json();
+        const vistos = new Set();
+        const locais = [];
+        (data.elements || []).forEach(el => {
+            const elLat = el.lat || (el.center && el.center.lat);
+            const elLon = el.lon || (el.center && el.center.lon);
+            if (elLat == null || elLon == null) return;
+            const tags = el.tags || {};
+            const nome = tags.name || (tags.amenity === "police" ? "Delegacia/Polícia" : "Serviço de apoio");
+            const chave = nome + "|" + elLat.toFixed(4) + "|" + elLon.toFixed(4);
+            if (vistos.has(chave)) return;
+            vistos.add(chave);
+            const endereco = [tags["addr:street"], tags["addr:housenumber"], tags["addr:suburb"], tags["addr:city"]].filter(Boolean).join(", ");
+            const nomeLower = nome.toLowerCase();
+            const tipo = (tags.amenity === "police" && !/mulher|cram|refer/.test(nomeLower)) ? "policia" : ( /mulher|deam|cram|defensoria|refer|casa da mulher|social/.test(nomeLower) || tags["social_facility:for"] ? "apoio" : "policia");
+            locais.push({ nome, lat: elLat, lon: elLon, endereco, tipo, dist: distanciaKm(lat, lon, elLat, elLon) });
+        });
+        return locais;
+    }
+
+    btn.addEventListener("click", async () => {
+        if (!navigator.geolocation) {
+            setStatus("Seu navegador não suporta geolocalização. Use os botões para abrir o mapa.", "erro");
+            return;
+        }
+        setStatus("Obtendo sua localização...", "");
+        resultados.innerHTML = "";
+        btn.disabled = true;
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            const acc = Math.round(pos.coords.accuracy || 0);
+            if (linkDelegacias) linkDelegacias.href = `https://www.google.com/maps/search/delegacia+da+mulher/@${lat},${lon},14z`;
+            if (linkPolicia) linkPolicia.href = `https://www.google.com/maps/search/pol%C3%ADcia+delegacia/@${lat},${lon},14z`;
+            setStatus(`Localização obtida (precisão ~${acc} m). Buscando serviços próximos...`, "");
+            try {
+                const locais = await buscarOverpass(lat, lon);
+                setStatus(locais.length ? `Encontramos ${locais.length} local(is) em até 7 km.` : "Nenhum local cadastrado encontrado automaticamente por perto.", locais.length ? "ok" : "");
+                renderLocais(locais, lat, lon);
+            } catch (e) {
+                setStatus("Não foi possível buscar locais automaticamente. Use os botões para abrir o mapa.", "erro");
+                resultados.innerHTML = '<div class="card"><p>Tente novamente em instantes ou abra o mapa para ver delegacias e polícia próximas à sua região.</p></div>';
+            } finally {
+                btn.disabled = false;
+            }
+        }, (err) => {
+            btn.disabled = false;
+            if (err.code === 1) setStatus("Permissão de localização negada. Você pode permitir no navegador ou usar os botões de mapa.", "erro");
+            else if (err.code === 2) setStatus("Localização indisponível no momento. Tente os botões de mapa.", "erro");
+            else if (err.code === 3) setStatus("Tempo esgotado ao obter localização. Tente novamente.", "erro");
+            else setStatus("Não foi possível obter sua localização.", "erro");
+        }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
+    });
 }
 
