@@ -56,8 +56,7 @@
 <nav>
 
 
-<div class="logo">
-
+<a href="testepz.html" class="logo" aria-label="PinkZone - ir para a página inicial">
 <span class="logo-icon">🌸</span>
 
 <div class="logo-text">
@@ -67,8 +66,7 @@
 <small>Rosa é sua zona segura</small>
 
 </div>
-
-</div>
+</a>
 
 
 
@@ -249,18 +247,18 @@ Serviços de emergência disponíveis para proteção.
     <p id="statusLocalizacao" class="localizacao-status" aria-live="polite"></p>
     <div id="resultadosLocalizacao" class="grid-layout resultados-localizacao"></div>
 </section>
-<!-- APOIO POR CIDADE (RN) -->
+<!-- APOIO POR CIDADE -->
 <section class="apoio-cidade" id="apoioCidade">
-    <h2 class="titulo-secao">Rede de apoio por cidade (RN)</h2>
-    <p class="subtitulo-pesquisa">Selecione sua cidade no Rio Grande do Norte para ver redes de apoio, centros feministas, Delegacia da Mulher, hospital da mulher e delegacias.</p>
+    <h2 class="titulo-secao">Rede de apoio por cidade</h2>
+    <p class="subtitulo-pesquisa">Selecione o estado e a cidade para consultar a base de dados do OpenStreetMap e encontrar delegacias, Delegacias da Mulher, centros de apoio feminino e centros feministas.</p>
     <div class="cidade-form">
-        <label for="estadoRN" class="sr-only">Estado</label>
-        <select id="estadoRN" disabled>
-            <option value="RN" selected>Rio Grande do Norte (RN)</option>
+        <label for="estadoBusca" class="sr-only">Estado</label>
+        <select id="estadoBusca">
+            <option value="">Carregando estados...</option>
         </select>
-        <label for="cidadeRN" class="sr-only">Cidade</label>
-        <select id="cidadeRN">
-            <option value="">Carregando cidades...</option>
+        <label for="cidadeBusca" class="sr-only">Cidade</label>
+        <select id="cidadeBusca" disabled>
+            <option value="">Selecione o estado primeiro</option>
         </select>
         <button type="button" class="btn-primary" id="btnBuscarCidade">Buscar apoio</button>
     </div>
@@ -669,95 +667,7 @@ Ajuda
         <p class="entrada-lembrete">Você não está sozinha. Se estiver em perigo agora, ligue 190.</p>
     </div>
 </div>
-<!-- POPUP AJUDA -->
 
-<div class="modal-ajuda" id="modalAjuda">
-
-    <div class="modal-conteudo">
-
-        <span class="fechar-modal" id="fecharAjuda">
-
-            ✖
-
-        </span>
-
-        <div class="modal-topo">
-
-            <div class="modal-icone">
-
-                🚨
-
-            </div>
-
-            <h2>
-
-                Buscar ajuda
-
-            </h2>
-
-            <p>
-
-                Escolha como deseja entrar em contato.
-
-            </p>
-
-        </div>
-
-        <div class="modal-opcoes">
-
-            <a href="https://wa.me/556196100180/?text=Ol%C3%A1"
-               target="_blank"
-               class="opcao-ajuda whatsapp">
-
-                🟢
-
-                <div>
-
-                    <strong>WhatsApp - Central de Atendimento às Mulheres</strong>
-
-                    <small>Conversar agora</small>
-
-                </div>
-
-            </a>
-
-            <a href="tel:180"
-
-               class="opcao-ajuda telefone">
-
-                📞
-
-                <div>
-
-                    <strong>Ligar 180</strong>
-
-                    <small>Central da Mulher</small>
-
-                </div>
-
-            </a>
-
-            <a href="tel:190"
-
-               class="opcao-ajuda policia">
-
-                🚔
-
-                <div>
-
-                    <strong>Emergência 190</strong>
-
-                    <small>Polícia Militar</small>
-
-                </div>
-
-            </a>
-
-        </div>
-
-    </div>
-
-</div>
 
 
 <script src="scriptpzteste.js"></script>

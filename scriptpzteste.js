@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     registrarServiceWorker();
     iniciarPopupEntrada();
     iniciarLocalizacaoApoio();
-    iniciarApoioPorCidadeRN();
+    iniciarApoioPorCidade();
 
 });
 
@@ -758,41 +758,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================================
-   MODAL DE AJUDA
-========================================== */
-
-const abrirAjuda = document.getElementById("abrirAjuda");
-const modalAjuda = document.getElementById("modalAjuda");
-const fecharAjuda = document.getElementById("fecharAjuda");
-
-if (abrirAjuda && modalAjuda && fecharAjuda) {
-
-    abrirAjuda.addEventListener("click", () => {
-
-        modalAjuda.classList.add("ativo");
-
-    });
-
-    fecharAjuda.addEventListener("click", () => {
-
-        modalAjuda.classList.remove("ativo");
-
-    });
-
-    modalAjuda.addEventListener("click", (e) => {
-
-        if (e.target === modalAjuda) {
-
-            modalAjuda.classList.remove("ativo");
-
-        }
-
-    });
-
-}
-
-/* ==========================================
    CONTATOS DE CONFIANÇA
+   O antigo modal "Buscar ajuda" foi removido:
+   o link Denunciar navega direto para a página.
 ========================================== */
 
 const CHAVE_CONTATOS = "pinkzone_contatos";
@@ -1577,15 +1545,16 @@ out center tags;`;
     });
 }
 /*====================================================
-    REDE DE APOIO POR CIDADE - RN
-=====================================================*/
+    REDE DE APOIO POR CIDADE (OPENSTREETMAP / OVERPASS)
+====================================================*/
 
-function iniciarApoioPorCidadeRN() {
-    const selectCidade = document.getElementById("cidadeRN");
+function iniciarApoioPorCidade() {
+    const selectEstado = document.getElementById("estadoBusca");
+    const selectCidade = document.getElementById("cidadeBusca");
     const btn = document.getElementById("btnBuscarCidade");
     const status = document.getElementById("statusCidade");
     const resultados = document.getElementById("resultadosCidade");
-    if (!selectCidade || !btn || !status || !resultados) return;
+    if (!selectEstado || !selectCidade || !btn || !status || !resultados) return;
 
     function setStatus(msg, tipo) {
         status.textContent = msg || "";
@@ -1593,49 +1562,139 @@ function iniciarApoioPorCidadeRN() {
     }
 
     function escapeHtml(s) {
-        return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     }
 
-    async function carregarCidades() {
+    const ESTADOS_FALLBACK = [
+        ["AC", "Acre"], ["AL", "Alagoas"], ["AP", "Amapá"], ["AM", "Amazonas"],
+        ["BA", "Bahia"], ["CE", "Ceará"], ["DF", "Distrito Federal"], ["ES", "Espírito Santo"],
+        ["GO", "Goiás"], ["MA", "Maranhão"], ["MT", "Mato Grosso"], ["MS", "Mato Grosso do Sul"],
+        ["MG", "Minas Gerais"], ["PA", "Pará"], ["PB", "Paraíba"], ["PR", "Paraná"],
+        ["PE", "Pernambuco"], ["PI", "Piauí"], ["RJ", "Rio de Janeiro"], ["RN", "Rio Grande do Norte"],
+        ["RS", "Rio Grande do Sul"], ["RO", "Rondônia"], ["RR", "Roraima"], ["SC", "Santa Catarina"],
+        ["SP", "São Paulo"], ["SE", "Sergipe"], ["TO", "Tocantins"]
+    ];
+
+    function catsVazias() {
+        return { delegacia: [], deam: [], apoioMulher: [], feminista: [] };
+    }
+
+    async function carregarEstados() {
+        let estados = null;
         try {
-            const resp = await fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados/24/municipios?orderBy=nome");
+            const resp = await fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome");
+            if (!resp.ok) throw new Error("ibge");
+            estados = await resp.json();
+        } catch (e) {
+            estados = null;
+        }
+
+        if (!Array.isArray(estados) || !estados.length) {
+            estados = ESTADOS_FALLBACK.map(([sigla, nome]) => ({ sigla, nome }));
+            setStatus("Lista de estados carregada localmente.", "");
+        }
+
+        selectEstado.innerHTML = '<option value="">Selecione o estado</option>' +
+            estados.map(e => `<option value="${escapeHtml(e.sigla)}">${escapeHtml(e.nome)}</option>`).join("");
+        selectCidade.disabled = false;
+        selectCidade.innerHTML = '<option value="">Selecione sua cidade</option>';
+    }
+
+    async function carregarCidades(uf) {
+        selectCidade.innerHTML = '<option value="">Carregando cidades...</option>';
+        resultados.innerHTML = "";
+        setStatus("", "");
+        try {
+            const resp = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${encodeURIComponent(uf)}/municipios?orderBy=nome`);
             if (!resp.ok) throw new Error("ibge");
             const dados = await resp.json();
             selectCidade.innerHTML = '<option value="">Selecione sua cidade</option>' +
                 dados.map(c => `<option value="${escapeHtml(c.nome)}">${escapeHtml(c.nome)}</option>`).join("");
         } catch (e) {
-            selectCidade.innerHTML = '<option value="">Não foi possível carregar cidades</option>';
-            setStatus("Erro ao carregar lista de cidades. Tente recarregar a página.", "erro");
+            selectCidade.innerHTML = '<option value="">Não foi possível carregar as cidades</option>';
+            setStatus("Erro ao carregar as cidades deste estado. Tente novamente.", "erro");
         }
     }
 
-    function cardLocal(l, tipoLabel) {
-        const maps = `https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lon}`;
-        const icones = { deam: "👮‍♀️", hospital: "🏥", delegacia: "🚓", apoio: "💜" };
-        const ic = icones[l.tipo] || "📍";
-        return `<div class="card card-apoio">
-            <div class="icone">${ic}</div>
-            <h3>${escapeHtml(l.nome)}</h3>
-            ${l.endereco ? `<p class="endereco">${escapeHtml(l.endereco)}</p>` : ''}
-            <p>${escapeHtml(tipoLabel)}</p>
-            <a href="${maps}" target="_blank" rel="noopener" class="btn-primary">Ver no mapa</a>
-        </div>`;
+    function classificar(tags, nome) {
+        const n = (nome || "").toLowerCase();
+        const amenity = tags.amenity || "";
+        const socFor = (tags["social_facility:for"] || "").toLowerCase();
+
+        const isDeam = /delegacia.*mulher|deam|ddm|defesa da mulher|mulher.*delegacia/.test(n);
+        const isFeminista = /feminist|feminismo|coletivo feminista|movimento feminista/.test(n);
+        const isApoioMulher = /centro.*apoio.*mulher|centro de refer[eê]ncia.*mulher|cram|casa da mulher|refer[eê]ncia.*mulher|abrigo.*mulher|defensoria.*mulher|atendimento.*mulher|prote[cç][aã]o.*mulher/.test(n) ||
+            socFor.includes("woman") || socFor.includes("women");
+        const isDelegacia = amenity === "police" || /delegacia|pol[ií]cia|dpc|plant[aã]o policial/.test(n);
+
+        if (isDeam) return "deam";
+        if (isFeminista) return "feminista";
+        if (isApoioMulher && !isDelegacia) return "apoioMulher";
+        if (isDelegacia) return "delegacia";
+        return null;
     }
 
-    function grupo(titulo, itens, tipoLabel, cidade, queryMapa) {
-        const mapLink = `https://www.google.com/maps/search/${encodeURIComponent(queryMapa + " em " + cidade + " RN")}`;
-        let html = `<div class="cidade-grupo"><h3>${escapeHtml(titulo)}</h3>`;
-        if (itens.length) {
-            html += `<div class="grid-layout">${itens.slice(0,8).map(l => cardLocal(l, tipoLabel)).join("")}</div>`;
-        } else {
-            html += `<div class="card"><p>Não encontramos cadastros automáticos desta categoria no OpenStreetMap para ${escapeHtml(cidade)}. Use o mapa para buscar opções atualizadas.</p></div>`;
+    async function consultarOverpass(lat, lon) {
+        const raio = 15000;
+        const query = `[out:json][timeout:25];
+(
+  nwr["amenity"="police"](around:${raio},${lat},${lon});
+  nwr["name"~"delegacia|pol[ií]cia|deam|mulher|femin|cram|abrigo|refer[eê]ncia|defensoria|centro de apoio",i](around:${raio},${lat},${lon});
+  nwr["social_facility:for"~"woman|women",i](around:${raio},${lat},${lon});
+  nwr["amenity"="social_facility"](around:${raio},${lat},${lon});
+);
+out center tags;`;
+
+        const endpoints = [
+            "https://overpass-api.de/api/interpreter",
+            "https://overpass.kumi.systems/api/interpreter"
+        ];
+
+        for (const url of endpoints) {
+            try {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 15000);
+                let resp;
+                try {
+                    resp = await fetch(url, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+                        body: "data=" + encodeURIComponent(query),
+                        signal: controller.signal
+                    });
+                } finally {
+                    clearTimeout(timer);
+                }
+                if (!resp.ok) throw new Error("overpass");
+                const data = await resp.json();
+
+                const cats = catsVazias();
+                const vistos = new Set();
+                (data.elements || []).forEach(el => {
+                    const elLat = el.lat || (el.center && el.center.lat);
+                    const elLon = el.lon || (el.center && el.center.lon);
+                    if (elLat == null || elLon == null) return;
+                    const tags = el.tags || {};
+                    const nome = tags.name || "Serviço sem nome";
+                    const tipo = classificar(tags, nome);
+                    if (!tipo) return;
+                    const chave = tipo + "|" + nome.toLowerCase() + "|" + elLat.toFixed(3) + "|" + elLon.toFixed(3);
+                    if (vistos.has(chave)) return;
+                    vistos.add(chave);
+                    const endereco = [tags["addr:street"], tags["addr:housenumber"], tags["addr:suburb"], tags["addr:city"]].filter(Boolean).join(", ");
+                    cats[tipo].push({ nome, lat: elLat, lon: elLon, endereco });
+                });
+                Object.keys(cats).forEach(k => cats[k].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")));
+                return cats;
+            } catch (e) {
+                // tenta o próximo servidor Overpass
+            }
         }
-        html += `<div class="mapa-links-cidade"><a class="btn-secondary" href="${mapLink}" target="_blank" rel="noopener">Buscar "${escapeHtml(titulo)}" no mapa</a></div></div>`;
-        return html;
+        throw new Error("overpass");
     }
 
-    async function geocodificarCidade(cidade) {
-        const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(cidade + ", Rio Grande do Norte, Brasil")}`;
+    async function geocodificarCidade(cidade, uf) {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=br&q=${encodeURIComponent(cidade + ", " + uf + ", Brasil")}`;
         const resp = await fetch(url, { headers: { "Accept-Language": "pt-BR" } });
         if (!resp.ok) throw new Error("geo");
         const arr = await resp.json();
@@ -1643,99 +1702,130 @@ function iniciarApoioPorCidadeRN() {
         return { lat: parseFloat(arr[0].lat), lon: parseFloat(arr[0].lon) };
     }
 
-    function classificar(tags, nome) {
-        const n = (nome || "").toLowerCase();
-        const amenity = tags.amenity || "";
-        const healthcare = (tags.healthcare || "").toLowerCase();
-        const socFor = (tags["social_facility:for"] || "").toLowerCase();
-        const isDeam = /mulher|deam|ddm|especializada.*mulher|defesa da mulher/.test(n);
-        const isHospitalMulher = (/hospital|maternidade/.test(n) && /mulher|materno|matern/.test(n)) || /hospital da mulher|maternidade/.test(n);
-        const isHospital = amenity === "hospital" || healthcare === "hospital" || /hospital|maternidade|upa|pronto.?socorro/.test(n);
-        const isApoio = /feminist|centro.*mulher|refer[eê]ncia.*mulher|cram|casa da mulher|abrigo|defensoria|creas|cras|conselho.*mulher/.test(n) || socFor.includes("woman") || socFor.includes("women");
-        const isPolicia = amenity === "police" || /delegacia|pol[ií]cia|dpc|dp\b|plant[aã]o policial/.test(n);
+    // Fallback: busca por categoria diretamente no Nominatim (OpenStreetMap)
+    async function buscarNominativo(cidade, uf) {
+        const termos = [
+            ["delegacia", "delegacia de polícia"],
+            ["deam", "delegacia da mulher"],
+            ["apoioMulher", "centro de apoio à mulher"],
+            ["feminista", "centro feminista"]
+        ];
+        const cats = catsVazias();
+        const vistos = new Set();
 
-        if (isDeam) return "deam";
-        if (isHospitalMulher) return "hospital";
-        if (isApoio && !isPolicia) return "apoio";
-        if (isHospital) return "hospital";
-        if (isPolicia) return "delegacia";
-        return null;
+        for (const [tipo, termo] of termos) {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&limit=8&countrycodes=br&q=${encodeURIComponent(termo + ", " + cidade + ", " + uf + ", Brasil")}`;
+            try {
+                const resp = await fetch(url, { headers: { "Accept-Language": "pt-BR" } });
+                if (resp.ok) {
+                    const arr = await resp.json();
+                    (arr || []).forEach(item => {
+                        const nome = item.name || (item.display_name || "").split(",")[0].trim() || "Serviço";
+                        const chave = tipo + "|" + nome.toLowerCase();
+                        if (vistos.has(chave)) return;
+                        vistos.add(chave);
+                        cats[tipo].push({
+                            nome,
+                            lat: parseFloat(item.lat),
+                            lon: parseFloat(item.lon),
+                            endereco: (item.display_name || "").split(",").slice(1, 4).join(",").trim()
+                        });
+                    });
+                }
+            } catch (e) {
+                // segue para a próxima categoria
+            }
+            // o Nominatim permite no máximo 1 requisição por segundo
+            await new Promise(resolve => setTimeout(resolve, 1100));
+        }
+        return cats;
     }
 
-    async function buscarOverpassCidade(lat, lon) {
-        const radius = 20000;
-        const query = `[out:json][timeout:25];
-(
-  node["amenity"="police"](around:${radius},${lat},${lon});
-  way["amenity"="police"](around:${radius},${lat},${lon});
-  node["amenity"="hospital"](around:${radius},${lat},${lon});
-  way["amenity"="hospital"](around:${radius},${lat},${lon});
-  node["healthcare"="hospital"](around:${radius},${lat},${lon});
-  way["healthcare"="hospital"](around:${radius},${lat},${lon});
-  node["amenity"="social_facility"](around:${radius},${lat},${lon});
-  way["amenity"="social_facility"](around:${radius},${lat},${lon});
-  node["office"~"ngo|government|lawyer",i](around:${radius},${lat},${lon});
-  way["office"~"ngo|government|lawyer",i](around:${radius},${lat},${lon});
-  node["name"~"mulher|femin|matern|delegacia|defensoria|CREAS|CRAS|DEAM",i](around:${radius},${lat},${lon});
-  way["name"~"mulher|femin|matern|delegacia|defensoria|CREAS|CRAS|DEAM",i](around:${radius},${lat},${lon});
-);
-out center tags;`;
-        const url = "https://overpass-api.de/api/interpreter?data=" + encodeURIComponent(query);
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error("overpass");
-        const data = await resp.json();
-        const vistos = new Set();
-        const cats = { apoio: [], deam: [], hospital: [], delegacia: [] };
-        (data.elements || []).forEach(el => {
-            const elLat = el.lat || (el.center && el.center.lat);
-            const elLon = el.lon || (el.center && el.center.lon);
-            if (elLat == null || elLon == null) return;
-            const tags = el.tags || {};
-            const nome = tags.name || "Serviço";
-            const tipo = classificar(tags, nome);
-            if (!tipo) return;
-            const chave = tipo + "|" + nome + "|" + elLat.toFixed(4) + "|" + elLon.toFixed(4);
-            if (vistos.has(chave)) return;
-            vistos.add(chave);
-            const endereco = [tags["addr:street"], tags["addr:housenumber"], tags["addr:suburb"]].filter(Boolean).join(", ");
-            cats[tipo].push({ nome, lat: elLat, lon: elLon, endereco, tipo });
-        });
-        return cats;
+    function cardLocal(l) {
+        const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.lat + "," + l.lon)}`;
+        return `<div class="card card-apoio">
+            <div class="icone">📍</div>
+            <h3>${escapeHtml(l.nome)}</h3>
+            ${l.endereco ? `<p class="endereco">${escapeHtml(l.endereco)}</p>` : ""}
+            <a href="${maps}" target="_blank" rel="noopener" class="btn-primary">Ver no mapa</a>
+        </div>`;
+    }
+
+    function grupo(titulo, itens, descricao, cidade, uf) {
+        const query = `${titulo} em ${cidade} ${uf}`;
+        const mapLink = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+        let html = `<div class="cidade-grupo"><h3>${escapeHtml(titulo)}</h3>`;
+        html += `<p class="cidade-grupo-desc">${escapeHtml(descricao)}</p>`;
+        if (itens.length) {
+            html += `<div class="grid-layout">${itens.slice(0, 9).map(cardLocal).join("")}</div>`;
+            if (itens.length > 9) html += `<p class="cidade-grupo-mais">+ ${itens.length - 9} resultado(s). Use o mapa para ver todos.</p>`;
+        } else {
+            html += `<div class="card"><p>Nenhum cadastro automático encontrado no OpenStreetMap para ${escapeHtml(cidade)} nesta categoria.</p></div>`;
+        }
+        html += `<div class="mapa-links-cidade"><a class="btn-secondary" href="${mapLink}" target="_blank" rel="noopener">Buscar &quot;${escapeHtml(titulo)}&quot; no mapa</a></div></div>`;
+        return html;
     }
 
     async function buscarCidade() {
         const cidade = selectCidade.value;
-        if (!cidade) {
-            setStatus("Selecione uma cidade do RN.", "erro");
-            return;
-        }
-        setStatus(`Buscando serviços em ${cidade}...`, "");
-        resultados.innerHTML = "";
+        const uf = selectEstado.value;
+        if (!uf) { setStatus("Selecione um estado.", "erro"); return; }
+        if (!cidade) { setStatus("Selecione uma cidade.", "erro"); return; }
+
+        setStatus(`Consultando a base do OpenStreetMap em ${cidade} (${uf})...`, "");
+        resultados.innerHTML = '<div class="card"><p>Buscando serviços...</p></div>';
         btn.disabled = true;
+
+        let cats = catsVazias();
+        let aviso = "";
         try {
-            const { lat, lon } = await geocodificarCidade(cidade);
-            let cats = { apoio: [], deam: [], hospital: [], delegacia: [] };
+            const { lat, lon } = await geocodificarCidade(cidade, uf);
             try {
-                cats = await buscarOverpassCidade(lat, lon);
-            } catch (e) { /* segue com links de mapa */ }
-
-            const total = cats.apoio.length + cats.deam.length + cats.hospital.length + cats.delegacia.length;
-            setStatus(total ? `Resultados encontrados para ${cidade} (RN).` : `Mostrando opções de busca no mapa para ${cidade} (RN). Alguns serviços podem não estar cadastrados automaticamente.`, total ? "ok" : "");
-
-            let html = "";
-            html += grupo("Delegacia da Mulher", cats.deam, "Atendimento especializado para mulheres.", cidade, "Delegacia da Mulher");
-            html += grupo("Redes de apoio e centros feministas", cats.apoio, "Rede de apoio, orientação e proteção.", cidade, "centro de referência da mulher OR centro feminista OR CREAS");
-            html += grupo("Hospital da Mulher / maternidade", cats.hospital, "Atendimento de saúde para mulheres.", cidade, "Hospital da Mulher maternidade");
-            html += grupo("Delegacias e polícia", cats.delegacia, "Delegacias e unidades policiais.", cidade, "delegacia polícia");
-            resultados.innerHTML = html;
+                cats = await consultarOverpass(lat, lon);
+            } catch (e) {
+                aviso = "A consulta avançada não respondeu. ";
+            }
         } catch (e) {
-            setStatus("Não foi possível localizar a cidade. Tente novamente.", "erro");
-        } finally {
-            btn.disabled = false;
+            aviso = "Não foi possível localizar a cidade no mapa. ";
         }
+
+        if (!cats.delegacia.length && !cats.deam.length && !cats.apoioMulher.length && !cats.feminista.length) {
+            try {
+                cats = await buscarNominativo(cidade, uf);
+                if (aviso) aviso = "Resultados obtidos pela busca do OpenStreetMap. ";
+            } catch (e) {
+                aviso += "Não foi possível consultar a base de dados. ";
+            }
+        }
+
+        const total = cats.delegacia.length + cats.deam.length + cats.apoioMulher.length + cats.feminista.length;
+        setStatus(
+            total
+                ? `${total} local(is) encontrado(s) em ${cidade} (${uf}) na base do OpenStreetMap. ${aviso}Confira os endereços no mapa.`
+                : `${aviso}Mostrando links de busca no mapa para ${cidade} (${uf}). Alguns serviços podem não estar cadastrados automaticamente.`,
+            total ? "ok" : (aviso ? "erro" : "")
+        );
+
+        resultados.innerHTML =
+            grupo("Delegacias", cats.delegacia, "Unidades policiais e delegacias da região.", cidade, uf) +
+            grupo("Delegacias da Mulher", cats.deam, "Atendimento especializado para mulheres (DEAM/DDM).", cidade, uf) +
+            grupo("Centros de apoio femininos", cats.apoioMulher, "Centros de referência, casas da mulher e serviços de proteção.", cidade, uf) +
+            grupo("Centros feministas", cats.feminista, "Coletivos e movimentos feministas de apoio.", cidade, uf);
+        btn.disabled = false;
     }
 
-    btn.addEventListener("click", buscarCidade);
+    selectEstado.addEventListener("change", () => {
+        if (selectEstado.value) {
+            carregarCidades(selectEstado.value);
+        } else {
+            selectCidade.disabled = true;
+            selectCidade.innerHTML = '<option value="">Selecione o estado primeiro</option>';
+            resultados.innerHTML = "";
+            setStatus("", "");
+        }
+    });
     selectCidade.addEventListener("change", () => { if (selectCidade.value) buscarCidade(); });
-    carregarCidades();
+    btn.addEventListener("click", buscarCidade);
+
+    carregarEstados();
 }

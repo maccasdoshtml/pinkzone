@@ -1375,6 +1375,23 @@ background:#2b2b2b;
     gap:12px;
 
     flex-shrink:0;
+    text-decoration:none;
+    border-radius:16px;
+    transition:transform .2s ease, opacity .2s ease;
+
+}
+
+.logo:hover{
+
+    transform:translateY(-2px);
+    opacity:.85;
+
+}
+
+.logo:focus-visible{
+
+    outline:3px solid var(--rosa);
+    outline-offset:6px;
 
 }
 
@@ -3915,7 +3932,7 @@ body.dark-theme .localizacao-status.erro{ color:#ff8a80; }
 body.dark-theme .localizacao-status.ok{ color:#a5d6a7; }
 body.dark-theme .resultados-localizacao .endereco{ color:#bbb; }
 /* ===========================================
-   APOIO POR CIDADE (RN)
+   APOIO POR CIDADE (OPENSTREETMAP)
 =========================================== */
 .apoio-cidade{ margin-bottom:60px; text-align:center; }
 .cidade-form{
@@ -3928,13 +3945,19 @@ body.dark-theme .resultados-localizacao .endereco{ color:#bbb; }
 .resultados-cidade{ margin-top:20px; text-align:left; }
 .cidade-grupo{ margin-bottom:28px; }
 .cidade-grupo h3{ font-size:1.2rem; color:var(--rosa-escuro); margin-bottom:12px; text-align:center; }
+.cidade-grupo-desc{ text-align:center; color:var(--cinza); font-size:.95rem; margin-bottom:14px; }
+.cidade-grupo-mais{ text-align:center; color:var(--cinza); font-size:.9rem; margin-top:12px; }
 .cidade-grupo .grid-layout{ margin-top:10px; }
 .cidade-grupo .card p{ font-size:.95rem; }
+.cidade-grupo .endereco{ font-size:.9rem; color:var(--cinza); margin-bottom:12px; }
 .mapa-links-cidade{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:10px; }
 .mapa-links-cidade a{ font-size:.9rem; }
 .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
 body.dark-theme .cidade-form select{ background:#2a2a2a; color:#fff; border-color:#444; }
 body.dark-theme .cidade-grupo h3{ color:#ff79a8; }
+body.dark-theme .cidade-grupo-desc,
+body.dark-theme .cidade-grupo-mais,
+body.dark-theme .cidade-grupo .endereco{ color:#bbb; }
 /* contatos - canais de emergência */
 .contatos-emergencia{ margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid #eee; }
 .contatos-emergencia h4, .contatos-secao-pessoal h4{ font-size:.95rem; color:var(--rosa-escuro); margin:0 0 8px; }
