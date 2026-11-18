@@ -3932,7 +3932,7 @@ body.dark-theme .localizacao-status.erro{ color:#ff8a80; }
 body.dark-theme .localizacao-status.ok{ color:#a5d6a7; }
 body.dark-theme .resultados-localizacao .endereco{ color:#bbb; }
 /* ===========================================
-   APOIO POR CIDADE (OPENSTREETMAP)
+   APOIO POR CIDADE (GOOGLE MAPS)
 =========================================== */
 .apoio-cidade{ margin-bottom:60px; text-align:center; }
 .cidade-form{
@@ -3945,6 +3945,9 @@ body.dark-theme .resultados-localizacao .endereco{ color:#bbb; }
 .resultados-cidade{ margin-top:20px; text-align:left; }
 .cidade-grupo{ margin-bottom:28px; }
 .cidade-grupo h3{ font-size:1.2rem; color:var(--rosa-escuro); margin-bottom:12px; text-align:center; }
+.mapas-categorias .card{ display:flex; flex-direction:column; }
+.mapas-categorias .card p{ flex:1; }
+.mapas-categorias .card .btn-primary{ align-self:flex-start; }
 .cidade-grupo-desc{ text-align:center; color:var(--cinza); font-size:.95rem; margin-bottom:14px; }
 .cidade-grupo-mais{ text-align:center; color:var(--cinza); font-size:.9rem; margin-top:12px; }
 .cidade-grupo .grid-layout{ margin-top:10px; }
