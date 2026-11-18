@@ -3885,6 +3885,17 @@ body.dark-theme .entrada-lembrete{
     color:#aaa;
 }
 
+/* ===========================================
+   PONTOS DE APOIO EM MOSSORÓ
+=========================================== */
+.pontos-apoio{ margin-bottom:60px; }
+.pontos-apoio .card{ display:flex; flex-direction:column; text-align:left; }
+.pontos-apoio .card p{ flex:1; }
+.pontos-apoio .endereco{ font-size:.95rem; color:var(--rosa-escuro); font-weight:600; margin-bottom:10px; }
+.pontos-apoio .contato{ font-size:.9rem; }
+.pontos-apoio .btn-primary{ align-self:flex-start; }
+.fonte-info{ text-align:center; font-size:.85rem; color:var(--cinza); margin-top:20px; }
+body.dark-theme .fonte-info{ color:#bbb; }
 /* contatos - canais de emergência */
 .contatos-emergencia{ margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid #eee; }
 .contatos-emergencia h4, .contatos-secao-pessoal h4{ font-size:.95rem; color:var(--rosa-escuro); margin:0 0 8px; }
