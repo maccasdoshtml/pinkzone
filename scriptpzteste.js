@@ -280,36 +280,7 @@ function criarBotaoTopo(){
     EFEITO HOVER DOS CARDS
 =====================================================*/
 
-function iniciarCards(){
-
-    const cards=document.querySelectorAll(".card");
-
-    cards.forEach(card=>{
-
-        card.addEventListener("mousemove",(e)=>{
-
-            const rect=card.getBoundingClientRect();
-
-            const x=e.clientX-rect.left;
-
-            const y=e.clientY-rect.top;
-
-            card.style.background=
-            `radial-gradient(circle at ${x}px ${y}px,
-            rgba(255,79,135,.10),
-            white 70%)`;
-
-        });
-
-        card.addEventListener("mouseleave",()=>{
-
-            card.style.background="white";
-
-        });
-
-    });
-
-}function iniciarCards() {
+function iniciarCards() {
 
     const cards = document.querySelectorAll(".card");
 
@@ -633,8 +604,6 @@ if(botaoQuiz){
             Mesmo assim, conhecer seus direitos e saber onde buscar ajuda é sempre importante.
             `;
 
-            resultado.style.background="#ffe4ec";
-
         }
 
         else if(total<=2){
@@ -644,8 +613,6 @@ if(botaoQuiz){
 
             Vale a pena conversar com alguém de confiança e observar se esses comportamentos se repetem.
             `;
-
-            resultado.style.background="#fff3cd";
 
         }
 
@@ -658,8 +625,6 @@ if(botaoQuiz){
 
             Considere procurar orientação e conhecer a Rede de Apoio.
             `;
-
-            resultado.style.background="#ffd6a5";
 
         }
 
@@ -674,8 +639,6 @@ if(botaoQuiz){
 
             Você não está sozinha.
             `;
-
-            resultado.style.background="#ffccd5";
 
         }
 
@@ -985,7 +948,7 @@ function iniciarContatos() {
     function mostrarStatus(mensagem, erroVisual = false) {
 
         status.textContent = mensagem;
-        status.style.color = erroVisual ? "#c62828" : "#2e7d32";
+        status.className = "contatos-status " + (erroVisual ? "erro" : "ok");
 
         clearTimeout(statusTimer);
 
