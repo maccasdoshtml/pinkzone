@@ -1,4 +1,4 @@
-const CACHE_NAME = "pinkzone-v1";
+const CACHE_NAME = "pinkzone-v2";
 
 const APP_SHELL = [
   "./index.html",
@@ -7,8 +7,12 @@ const APP_SHELL = [
   "./sobre.html",
   "./sinais.html",
   "./denunciar.html",
+  "./relatos.html",
   "./testepz.css",
   "./scriptpzteste.js",
+  "./supabase-config.js",
+  "./supabase-client.js",
+  "./relatos.js",
   "./manifest.json",
   "./imagens/apoio.svg",
   "./imagens/sobre.svg",
@@ -48,6 +52,8 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
 
   if (!url.protocol.startsWith("http")) return;
+
+  if (url.hostname.endsWith(".supabase.co")) return;
 
   if (request.mode === "navigate") {
     event.respondWith(

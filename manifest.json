@@ -62,6 +62,19 @@
       ]
     },
     {
+      "name": "Relatos",
+      "short_name": "Relatos",
+      "description": "Histórias anônimas enviadas por mulheres brasileiras",
+      "url": "./relatos.html",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
       "name": "Como Denunciar",
       "short_name": "Denunciar",
       "description": "Canais e passos para denunciar com segurança",

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#ff4f87">
+
+<meta name="robots" content="noindex, nofollow">
+
+<title>PinkZone - Moderação de relatos</title>
+
+<link rel="stylesheet" href="testepz.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<button class="dark-mode-toggle" aria-label="Ativar tema escuro">◐</button>
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<span class="logo-icon">PZ</span>
+
+<div class="logo-text">
+
+<h2>PinkZone</h2>
+
+<small>Moderação de relatos</small>
+
+</div>
+
+</div>
+
+<ul>
+
+<li><a href="testepz.html">Início</a></li>
+
+<li><a href="relatos.html">Relatos</a></li>
+
+<li><a href="#" id="botaoSair">Sair</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+<main class="admin-main">
+
+<section id="areaLogin" class="admin-login">
+
+<h1>Acesso da equipe</h1>
+
+<p>Entre com a conta de administrador para revisar os relatos enviados.</p>
+
+<form id="formLogin" class="relato-form">
+
+<div class="relato-campo">
+
+<label for="adminEmail">E-mail</label>
+
+<input id="adminEmail" type="email" autocomplete="username" required>
+
+</div>
+
+<div class="relato-campo">
+
+<label for="adminSenha">Senha</label>
+
+<input id="adminSenha" type="password" autocomplete="current-password" required>
+
+</div>
+
+<button type="submit" class="btn-primary">Entrar</button>
+
+<p id="statusLogin" class="relato-status" role="status" aria-live="polite"></p>
+
+</form>
+
+</section>
+
+<section id="areaPainel" class="admin-painel" hidden>
+
+<h1>Moderação de relatos</h1>
+
+<p>
+Revise o texto removendo nomes, lugares ou qualquer dado que possa
+identificar alguém antes de publicar.
+</p>
+
+<div class="admin-controles">
+
+<label for="filtroStatus">Mostrar:</label>
+
+<select id="filtroStatus">
+<option value="todos">Todos</option>
+<option value="pendente">Pendentes</option>
+<option value="publicado">Publicados</option>
+<option value="arquivado">Arquivados</option>
+</select>
+
+<button type="button" id="botaoAtualizar" class="btn-secondary">Atualizar</button>
+
+</div>
+
+<p id="statusPainel" class="relato-status" role="status" aria-live="polite"></p>
+
+<div id="listaAdmin" class="relatos-lista"></div>
+
+</section>
+
+</main>
+
+<script src="supabase-config.js"></script>
+
+<script src="supabase-client.js"></script>
+
+<script src="admin.js"></script>
+
+<script src="scriptpzteste.js"></script>
+
+</body>
+
+</html>

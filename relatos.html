@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<meta name="theme-color" content="#ff4f87">
+
+<meta name="description" content="Relatos anônimos de mulheres brasileiras, publicados após revisão. Compartilhe sua história com segurança no PinkZone.">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta name="apple-mobile-web-app-title" content="PinkZone">
+
+<link rel="manifest" href="manifest.json">
+
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+<title>PinkZone - Relatos</title>
+
+<link rel="stylesheet" href="testepz.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<button class="dark-mode-toggle" aria-label="Ativar tema escuro">◐</button>
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<span class="logo-icon">PZ</span>
+
+<div class="logo-text">
+
+<h2>PinkZone</h2>
+
+<small>Rosa é sua zona segura</small>
+
+</div>
+
+</div>
+
+<ul>
+
+<li><a href="testepz.html">Início</a></li>
+
+<li><a href="sobre.html">Sobre</a></li>
+
+<li><a href="apoio.html">Rede de Apoio</a></li>
+
+<li><a href="sinais.html">Sinais</a></li>
+
+<li><a href="relatos.html">Relatos</a></li>
+
+<li><a href="denunciar.html" class="menu-alerta" id="abrirAjuda">Denunciar</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<div class="hero-text">
+
+<span class="hero-badge">Vozes reais do Brasil</span>
+
+<h1>Histórias que merecem ser <span>ouvidas.</span></h1>
+
+<p>
+Aqui você encontra relatos enviados por mulheres brasileiras e publicados
+de forma anônima após revisão da equipe. Nenhum texto é inventado: cada
+história vem de uma pessoa que decidiu compartilhar sua experiência.
+</p>
+
+<div class="hero-buttons">
+
+<a href="#formularioRelato" class="btn-primary">Compartilhar meu relato</a>
+
+<a href="apoio.html" class="btn-secondary">Buscar apoio</a>
+
+</div>
+
+</div>
+
+<div class="hero-image">
+
+<img src="imagens/sobre.svg" alt="Mulheres compartilhando suas histórias">
+
+</div>
+
+</section>
+
+<section class="relato-aviso">
+
+<h3>Antes de escrever, proteja-se</h3>
+
+<p>
+Não inclua nome, endereço, telefone, escola, local de trabalho ou qualquer
+detalhe que identifique você, outra pessoa ou o agressor. Seu relato é
+anônimo e será revisado antes de aparecer aqui. Se você estiver em perigo
+agora, ligue <strong>190</strong> ou <strong>180</strong>.
+</p>
+
+</section>
+
+<section id="formularioRelato" class="relato-formulario">
+
+<h2 class="titulo-secao">Compartilhe sua história</h2>
+
+<p class="relato-intro">
+Você não precisa contar tudo. Escreva apenas o que se sentir segura em
+compartilhar. O envio não cria conta e não pede seus dados pessoais.
+</p>
+
+<form id="formRelato" class="relato-form">
+
+<div class="relato-campo">
+
+<label for="relatoTitulo">Título do relato</label>
+
+<input id="relatoTitulo" name="titulo" type="text" minlength="5" maxlength="120" required placeholder="Ex.: Como consegui sair de casa">
+
+</div>
+
+<div class="relato-linha">
+
+<div class="relato-campo">
+
+<label for="relatoUf">Estado (UF)</label>
+
+<select id="relatoUf" name="uf" required>
+<option value="">Selecione</option>
+<option value="AC">AC</option>
+<option value="AL">AL</option>
+<option value="AP">AP</option>
+<option value="AM">AM</option>
+<option value="BA">BA</option>
+<option value="CE">CE</option>
+<option value="DF">DF</option>
+<option value="ES">ES</option>
+<option value="GO">GO</option>
+<option value="MA">MA</option>
+<option value="MT">MT</option>
+<option value="MS">MS</option>
+<option value="MG">MG</option>
+<option value="PA">PA</option>
+<option value="PB">PB</option>
+<option value="PR">PR</option>
+<option value="PE">PE</option>
+<option value="PI">PI</option>
+<option value="RJ">RJ</option>
+<option value="RN">RN</option>
+<option value="RS">RS</option>
+<option value="RO">RO</option>
+<option value="RR">RR</option>
+<option value="SC">SC</option>
+<option value="SP">SP</option>
+<option value="SE">SE</option>
+<option value="TO">TO</option>
+</select>
+
+</div>
+
+<div class="relato-campo">
+
+<label for="relatoCidade">Cidade (opcional)</label>
+
+<input id="relatoCidade" name="cidade" type="text" maxlength="80" placeholder="Ex.: Natal">
+
+</div>
+
+<div class="relato-campo">
+
+<label for="relatoTipo">Tipo de violência (opcional)</label>
+
+<select id="relatoTipo" name="tipo_violencia">
+<option value="">Prefiro não informar</option>
+<option value="Fisica">Física</option>
+<option value="Psicologica">Psicológica</option>
+<option value="Sexual">Sexual</option>
+<option value="Patrimonial">Patrimonial</option>
+<option value="Moral">Moral</option>
+<option value="Outros">Outros</option>
+</select>
+
+</div>
+
+</div>
+
+<div class="relato-campo">
+
+<label for="relatoConteudo">Seu relato</label>
+
+<textarea id="relatoConteudo" name="conteudo" rows="8" minlength="20" maxlength="5000" required placeholder="Escreva aqui o que deseja compartilhar, sem dados que identifiquem você ou outras pessoas."></textarea>
+
+</div>
+
+<label class="relato-consentimento">
+
+<input type="checkbox" id="relatoConsentimento" required>
+
+<span>Autorizo que, se aprovado pela equipe, meu relato seja publicado de forma anônima nesta página.</span>
+
+</label>
+
+<button type="submit" id="botaoEnviar" class="btn-primary">Enviar relato</button>
+
+<p id="statusEnvio" class="relato-status" role="status" aria-live="polite"></p>
+
+</form>
+
+</section>
+
+<section class="relatos-publicados">
+
+<h2 class="titulo-secao">Relatos publicados</h2>
+
+<p class="relato-intro">
+Histórias anônimas enviadas por mulheres do Brasil e liberadas pela equipe
+do PinkZone.
+</p>
+
+<p id="carregandoRelatos" class="relato-status">Carregando relatos...</p>
+
+<p id="relatosVazios" class="relato-status" hidden>Ainda não há relatos publicados. Sua história pode ser a primeira.</p>
+
+<div id="listaRelatos" class="relatos-lista"></div>
+
+</section>
+
+<section class="cta">
+
+<h2>Precisa conversar com alguém?</h2>
+
+<p>A Central de Atendimento à Mulher é gratuita, sigilosa e funciona 24 horas.</p>
+
+<div class="hero-buttons">
+
+<a href="tel:180" class="btn-primary">Ligar 180</a>
+
+<a href="apoio.html" class="btn-secondary">Rede de apoio</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<div class="footer-container">
+
+<div class="footer-logo">
+
+<h2>PinkZone</h2>
+
+<p>Uma plataforma de informação, acolhimento e orientação para mulheres em situação de violência.</p>
+
+</div>
+
+<div class="footer-links">
+
+<h3>Navegação</h3>
+
+<a href="testepz.html">Início</a>
+
+<a href="sobre.html">Sobre</a>
+
+<a href="apoio.html">Rede de Apoio</a>
+
+<a href="relatos.html">Relatos</a>
+
+<a href="denunciar.html">Denunciar</a>
+
+</div>
+
+<div class="footer-links">
+
+<h3>Ajuda</h3>
+
+<a href="tel:180">Central 180</a>
+
+<a href="tel:190">Emergência 190</a>
+
+<a href="admin.html">Acesso da equipe</a>
+
+</div>
+
+</div>
+
+<p class="footer-copy">© 2026 PinkZone - Rosa é sua zona segura.</p>
+
+</footer>
+
+<script src="supabase-config.js"></script>
+
+<script src="supabase-client.js"></script>
+
+<script src="relatos.js"></script>
+
+<script src="scriptpzteste.js"></script>
+
+</body>
+
+</html>

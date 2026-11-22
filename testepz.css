@@ -3908,3 +3908,119 @@ body.dark-theme .contatos-emergencia{ border-bottom-color:#444; }
 body.dark-theme .contato-emergencia-item{ background:#2a2a2a; border-color:#444; color:#fff; }
 body.dark-theme .contato-emergencia-item:hover{ background:#3b2b34; }
 body.dark-theme .contatos-emergencia h4, body.dark-theme .contatos-secao-pessoal h4{ color:#ff79a8; }
+
+.relato-aviso{
+    background:var(--rosa-claro);
+    border-left:5px solid var(--rosa);
+    border-radius:var(--radius);
+    padding:22px 26px;
+    margin-bottom:60px;
+}
+.relato-aviso h3{ color:var(--rosa-escuro); margin-bottom:8px; }
+.relato-aviso p{ font-size:.95rem; }
+.relato-formulario,
+.relatos-publicados,
+.admin-main section{ margin-bottom:70px; }
+.relato-intro{ color:var(--cinza); margin-bottom:26px; }
+.relato-form{
+    background:var(--branco);
+    padding:30px;
+    border-radius:var(--radius);
+    box-shadow:var(--sombra);
+    display:grid;
+    gap:20px;
+}
+.relato-linha{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.relato-campo{ display:grid; gap:8px; }
+.relato-campo label,
+.admin-campo span{ font-weight:600; font-size:.9rem; }
+.relato-campo input,
+.relato-campo select,
+.relato-campo textarea,
+.admin-campo input,
+.admin-campo textarea,
+.admin-controles select{
+    width:100%;
+    padding:12px 14px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    background:var(--background);
+    color:var(--texto);
+    font-size:1rem;
+    font-family:inherit;
+}
+.relato-campo textarea,
+.admin-campo textarea{ resize:vertical; line-height:1.6; }
+.relato-consentimento{ display:flex; gap:10px; align-items:flex-start; font-size:.9rem; }
+.relato-consentimento input{ width:18px; height:18px; margin-top:3px; accent-color:var(--rosa); }
+.relato-form .btn-primary,
+.admin-acoes button{ border:0; cursor:pointer; font-family:inherit; }
+.relato-form .btn-primary{ justify-self:start; }
+.relato-form .btn-primary:disabled,
+.admin-acoes button:disabled{ opacity:.6; cursor:not-allowed; }
+.relato-status{ min-height:1.5em; font-size:.92rem; color:var(--cinza); }
+.relato-status.sucesso{ color:#2e7d32; }
+.relato-status.erro{ color:#c62828; }
+.relato-status.info{ color:var(--rosa-escuro); }
+.relatos-lista{ display:grid; gap:22px; }
+.relato-card{
+    background:var(--branco);
+    border-radius:var(--radius);
+    padding:26px;
+    box-shadow:var(--sombra);
+    text-align:left;
+}
+.relato-meta{ display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; margin-bottom:12px; font-size:.85rem; color:var(--cinza); }
+.relato-meta p{ margin:0; }
+.relato-local{ color:var(--rosa-escuro); font-weight:600; }
+.relato-tag{
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:20px;
+    background:var(--rosa-claro);
+    color:var(--rosa-escuro);
+    font-size:.78rem;
+    font-weight:600;
+}
+.relato-card h3{ font-size:1.25rem; margin-bottom:10px; color:var(--rosa-escuro); }
+.relato-texto{ white-space:pre-wrap; line-height:1.8; }
+.admin-main h1{ font-size:2rem; margin-bottom:10px; color:var(--rosa-escuro); }
+.admin-main p{ color:var(--cinza); margin-bottom:24px; }
+.admin-login{ max-width:520px; margin:0 auto; text-align:center; }
+.admin-login form{ text-align:left; }
+.admin-controles{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:16px; }
+.admin-controles label{ font-weight:600; font-size:.9rem; }
+.admin-controles select{ width:auto; min-width:160px; padding:10px 12px; }
+.admin-controles .btn-secondary{ padding:10px 18px; font-size:.9rem; }
+.admin-card{ display:grid; gap:16px; }
+.admin-campo{ display:grid; gap:8px; }
+.admin-acoes{ display:flex; flex-wrap:wrap; gap:10px; }
+.admin-acoes button{ padding:10px 18px; font-size:.9rem; }
+.btn-perigo{
+    background:transparent;
+    color:#c62828;
+    border:2px solid #c62828;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+}
+.btn-perigo:hover{ background:#c62828; color:#fff; }
+.status-publicado{ background:#e8f5e9; color:#2e7d32; }
+.status-arquivado{ background:#eee; color:#666; }
+body.dark-theme .relato-aviso p,
+body.dark-theme .relato-intro{ color:#bbb; }
+body.dark-theme .relato-card,
+body.dark-theme .relato-form{ background:#1d1d1d; }
+body.dark-theme .relato-campo input,
+body.dark-theme .relato-campo select,
+body.dark-theme .relato-campo textarea,
+body.dark-theme .admin-campo input,
+body.dark-theme .admin-campo textarea,
+body.dark-theme .admin-controles select{ background:#121212; color:#fff; border-color:#444; }
+body.dark-theme .btn-perigo{ color:#ff8a80; border-color:#ff8a80; }
+body.dark-theme .btn-perigo:hover{ background:#ff8a80; color:#121212; }
+@media(max-width:760px){
+    .relato-linha{ grid-template-columns:1fr; }
+    .relato-form{ padding:22px; }
+    .relato-card{ padding:20px; }
+}
