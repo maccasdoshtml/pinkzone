@@ -353,9 +353,14 @@ function iniciarMenu(){
 
         links.forEach(link=>{
 
+            const href=link.getAttribute("href");
+
+            /* Só controla links internos (#secao); preserva o item ativo da página */
+            if(!href || href.charAt(0)!=="#") return;
+
             link.classList.remove("active");
 
-            if(link.getAttribute("href")==="#"+atual){
+            if(href==="#"+atual){
 
                 link.classList.add("active");
 
